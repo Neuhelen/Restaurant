@@ -1,7 +1,16 @@
 # Resturant
+We would like to make a webpage for a resturant.  
+We would like to add:  
+* A menu page (static or dynamic).  
+* A reservations request page for the customers.  
+* A reservations management page for the resturant workers.
 
 
 
+
+
+
+---
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
