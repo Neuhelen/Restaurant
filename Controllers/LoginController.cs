@@ -20,8 +20,7 @@ namespace Resturant.Controllers
                 return true;
             }
             else
-            {
-                
+            {    
                 return false;
             }
 
