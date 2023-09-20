@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Resturant.Models;
+using System.Net;
 
 namespace Resturant.Controllers
 {
@@ -10,24 +11,27 @@ namespace Resturant.Controllers
             return View();
         }
 
-        public bool Validate(string user, string password)
+        [HttpPost("/Login/Validate")]
+        [ActionName("Validate")]
+        public IActionResult Validate(LoginViewModel login)
         {
             bool valid = false;
-            
 
             if (valid)
             {
-                return true;
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return RedirectToAction("Index", "Home");
             }
             else
-            {    
-                return false;
+            {
+                Response.StatusCode = (int)HttpStatusCode.Forbidden;
+                return View();
             }
 
         }
 
     }
 
-    
+
 
 }
