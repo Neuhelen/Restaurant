@@ -1,0 +1,182 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+Enter your name: <input type="text" id="nameTextbox" onkeyup="checkName()">
+
+<br><br>
+
+<!-- This part creates text and textfield that updates when a key is pressed. -->
+
+Enter your email: <input type="text" id="emailTextbox" onkeyup="checkEmail()">
+
+<br><br>
+
+Enter your address: <input type="text" id="addressTextbox" onkeyup="checkAddress()">
+
+<br><br>
+
+<label for="party">Enter the size of your party:</label>
+<br>
+<br>
+
+Enter the size of your party: <input type="text" id="partyTextbox" name="party" onkeyup="checkParty()">
+
+<br><br>
+
+Enter the meals of your party: <input type="text" id="mealTextbox" onkeyup="checkMeals()">
+
+<br><br>
+
+Enter any additional notes (Food allergies or special needs): <input type="text" id="notesTextbox" onkeyup="checkNotes()">
+
+
+<br><br>
+
+<!-- This part creates a button. -->
+<button id="continueButton">Continue</button>
+
+<script>
+const enableContinueArray = [];
+
+enableContinueArray.push(0, 0, 0, 0, 0);
+
+const continueButton = document.getElementById("continueButton");
+
+continueButton.disabled = true;
+
+//This function enables the "continueButton". 
+function enableContinueButton() {
+	let enableCounter = 0; 
+	for (let i = 0; i < enableContinueArray.length; i++) {
+    		if (enableContinueArray[i] == 1){
+            		enableCounter += 1;
+        	} else {
+            		continueButton.disabled = true;
+        	}
+	}
+	if (enableCounter == 5){
+		continueButton.disabled = false;
+        }	
+}
+
+function checkName() {
+	let textbox = document.getElementById("nameTextbox");
+	
+	//When a button is pressed in the textfield, the border becomes red, 
+	//unless there is text in the textfield. 
+    
+    	document.getElementById("nameTextbox").style.borderColor = "red";
+    
+	if (textbox.value.length > 0) {
+    		document.getElementById("nameTextbox").style.borderColor = "green";
+
+		//This part activates the "Continue"-button if all the textfields fulfill their requirements. 
+    		enableContinueArray[0] = 1; 
+    		enableContinueButton();
+        	
+        	return; 
+    	}
+    	enableContinueArray[0] = 0; 
+    	enableContinueButton(); 
+}
+
+function checkEmail() {
+	let textbox = document.getElementById("emailTextbox");
+
+	//When a button is pressed in the textfield, the border becomes red, 
+	//unless the text in the textfield fullfils all the conditions in the if-statements. 
+	
+	document.getElementById("emailTextbox").style.borderColor = "red";
+
+	//These if-statements check whether the text in the textfield passes our criteria for an email. 
+	//There must be 2 characters before the "@@", 2 more characters, a "." and finally 2 more characters 
+	//in the textfield to pass the if-statements and make the border of the textfield green. 
+  
+	if (textbox.value.length >= 8) {
+		if (textbox.value.includes("@@")) {
+			if (textbox.value.substring(0, textbox.value.indexOf("@@")).length >= 2) {
+				if (textbox.value.substring(textbox.value.indexOf("@@")).includes(".")) {
+					if (textbox.value.substring(textbox.value.indexOf("@@") + 1, textbox.value.lastIndexOf(".")).length >= 2) {
+						if (textbox.value.substring(textbox.value.lastIndexOf(".") + 1).length >= 2) {
+							document.getElementById("emailTextbox").style.borderColor = "green";
+							enableContinueArray[1] = 1;
+							enableContinueButton();
+							return; 
+						}
+					}
+				}
+			}
+		}
+	}
+	//If the conditions are not met, the button is disabled.
+    	enableContinueArray[1] = 0
+	enableContinueButton(); 
+}
+
+function checkAddress() {
+	
+	//If there is text in the the textbox that includes " ", as well as text before and after the " ", 
+	//the box fulfills one of the 5 requirements to continue. 
+	let textbox = document.getElementById("addressTextbox");
+	document.getElementById("addressTextbox").style.borderColor = "red";
+    
+	if (textbox.value.length > 0) {
+    		if (textbox.value.includes(" ")){
+        		if (textbox.value.substring(0, textbox.value.indexOf(" ")).length >= 1) {
+            			if (textbox.value.substring(textbox.value.indexOf(" ") + 1).length >= 2) {
+                			document.getElementById("addressTextbox").style.borderColor = "green";
+
+					//This part activates the "Continue"-button if all the textfields fulfill their requirements. 
+                    			enableContinueArray[2] = 1; 
+                    			enableContinueButton();
+                    			
+                    			return;
+             			}
+             		} 
+        	}
+    	}
+    	enableContinueArray[2] = 0; 
+    	enableContinueButton(); 
+}
+
+function checkParty() {
+	let textbox = document.getElementById("partyTextbox");
+    
+    	document.getElementById("partyTextbox").style.borderColor = "red";
+    
+	if (textbox.value.length > 0) {
+    		document.getElementById("partyTextbox").style.borderColor = "green";
+		
+		//This part activates the "Continue"-button if all the textfields fulfill their requirements. 
+		enableContinueArray[3] = 1; 
+    		enableContinueButton();
+        	
+        	return; 
+    	}
+    	enableContinueArray[3] = 0; 
+    	enableContinueButton(); 
+}
+
+function checkMeals() {
+	let textbox = document.getElementById("mealTextbox");
+	
+	//When a button is pressed in the textfield, the border becomes red, 
+	//unless there is text in the textfield. 
+    
+    	document.getElementById("mealTextbox").style.borderColor = "red";
+    
+	if (textbox.value.length > 0) {
+    		document.getElementById("mealTextbox").style.borderColor = "green";
+		
+		//This part activates the "Continue"-button if all the textfields fulfill their requirements. 
+    		enableContinueArray[4] = 1; 
+    		enableContinueButton();
+        	
+        	return; 
+    	}
+    	enableContinueArray[4] = 0; 
+    	enableContinueButton(); 
+}
+</script>
