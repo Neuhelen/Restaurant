@@ -4,190 +4,40 @@
 @{
 	ViewData["Title"] = "Booking Form";
 }
+<style>
+	.grid-container {
+		display: grid;
+		grid-template-columns: auto auto;
+		background-color: #2196F3;
+	}
+
+	.grid-item {
+		background-color: rgba(255, 255, 255, 0.8);
+		border: 1px solid rgba(0, 0, 0, 0.8);
+		font-size: 30px;
+		text-align: center;
+	}
+</style>
 
 <!-- This part creates labels and textfields that updates when a key has been pressed. -->
-
-<label for="party">Enter your name:</label>
-
-<input type="text" id="nameTextbox" onkeyup="checkName()">
-
-<br><br>
-
-<label for="party">Enter your email:</label>
-
-<input type="text" id="emailTextbox" onkeyup="checkEmail()">
-
-<br><br>
-
-<label for="party">Enter your address:</label>
-
-<input type="text" id="addressTextbox" onkeyup="checkAddress()">
-
-<br><br>
-
-<label for="party">Enter the size of your party:</label>
-
-<input type="text" id="partyTextbox" name="party" onkeyup="checkParty()">
-
-<br><br>
-
-<label for="party">Enter the size of your party:</label>
-
-<input type="text" id="mealTextbox" onkeyup="checkMeals()">
-
-<br><br>
-
-<label for="party">Enter any additional notes (Food allergies or special needs):</label>
-
- <input type="text" id="notesTextbox" onkeyup="checkNotes()">
+<div class="grid-container">
+	<div class="grid-item"><label for="bookingDate">Enter the date you wish to book:</label></div>
+	<div class="grid-item"><input type="date" id="bookingDate" onchange="checkDate()"></div>
+	<div class="grid-item"><label for="party">Enter your name:</label></div>
+	<div class="grid-item"><input type="text" id="nameTextbox" onkeyup="checkName()"></div>
+	<div class="grid-item"><label for="party">Enter your email:</label></div>
+	<div class="grid-item"><input type="text" id="emailTextbox" onkeyup="checkEmail()"></div>
+	<div class="grid-item"><label for="party">Enter your phone number:</label></div>
+	<div class="grid-item"><input type="number" id="phoneTextbox" onkeyup="checkPhoneNumber()"></div>
+	<div class="grid-item"><label for="party">Enter the size of your party:</label></div>
+	<div class="grid-item"><input type="number" id="partyTextbox" name="party" onkeyup="checkParty()"></div>
+	<div class="grid-item"><label for="party">Enter any additional notes <br>(Food allergies or special needs):</label></div>
+	<div class="grid-item"><input type="text" id="notesTextbox" onkeyup="checkNotes()"></div>
+</div>
 
 <br><br>
 
 <!-- This part creates a button. -->
 <button id="continueButton">Continue</button>
 
-<script>
-const enableContinueArray = [];
-
-enableContinueArray.push(0, 0, 0, 0, 0);
-
-const continueButton = document.getElementById("continueButton");
-
-//This part disables the button by default. 
-
-continueButton.disabled = true;
-
-//This function enables the "continueButton" if the different needed textfields' requirements are fulfilled. 
-function enableContinueButton() {
-	let enableCounter = 0; 
-	for (let i = 0; i < enableContinueArray.length; i++) {
-    		if (enableContinueArray[i] == 1){
-            		enableCounter += 1;
-        	} else {
-            		continueButton.disabled = true;
-        	}
-	}
-	if (enableCounter == 5){
-		continueButton.disabled = false;
-        }	
-}
-
-function checkName() {
-	let textbox = document.getElementById("nameTextbox");
-	
-	//When a button is pressed in the textfield, the border becomes red, 
-	//unless there is text in the textfield. 
-    
-    	document.getElementById("nameTextbox").style.borderColor = "red";
-    
-	if (textbox.value.length > 0) {
-    		document.getElementById("nameTextbox").style.borderColor = "green";
-
-		//This part activates the "Continue"-button if all the textfields fulfill their requirements. 
-    		enableContinueArray[0] = 1; 
-    		enableContinueButton();
-        	
-        	return; 
-    	}
-    	enableContinueArray[0] = 0; 
-    	enableContinueButton(); 
-}
-
-function checkEmail() {
-	let textbox = document.getElementById("emailTextbox");
-
-	//When a button is pressed in the textfield, the border becomes red, 
-	//unless the text in the textfield fullfils all the conditions in the if-statements. 
-	
-	document.getElementById("emailTextbox").style.borderColor = "red";
-
-	//These if-statements check whether the text in the textfield passes our criteria for an email. 
-	//There must be 2 characters before the "@@", 2 more characters, a "." and finally 2 more characters 
-	//in the textfield to pass the if-statements and make the border of the textfield green. 
-  
-	if (textbox.value.length >= 8) {
-		if (textbox.value.includes("@@")) {
-			if (textbox.value.substring(0, textbox.value.indexOf("@@")).length >= 2) {
-				if (textbox.value.substring(textbox.value.indexOf("@@")).includes(".")) {
-					if (textbox.value.substring(textbox.value.indexOf("@@") + 1, textbox.value.lastIndexOf(".")).length >= 2) {
-						if (textbox.value.substring(textbox.value.lastIndexOf(".") + 1).length >= 2) {
-							document.getElementById("emailTextbox").style.borderColor = "green";
-							enableContinueArray[1] = 1;
-							enableContinueButton();
-							return; 
-						}
-					}
-				}
-			}
-		}
-	}
-	//If the conditions are not met, the button is disabled.
-    	enableContinueArray[1] = 0
-	enableContinueButton(); 
-}
-
-function checkAddress() {
-	
-	//If there is text in the the textbox that includes " ", as well as text before and after the " ", 
-	//the box fulfills one of the 5 requirements to continue. 
-	let textbox = document.getElementById("addressTextbox");
-	document.getElementById("addressTextbox").style.borderColor = "red";
-    
-	if (textbox.value.length > 0) {
-    		if (textbox.value.includes(" ")){
-        		if (textbox.value.substring(0, textbox.value.indexOf(" ")).length >= 1) {
-            			if (textbox.value.substring(textbox.value.indexOf(" ") + 1).length >= 2) {
-                			document.getElementById("addressTextbox").style.borderColor = "green";
-
-					//This part activates the "Continue"-button if all the textfields fulfill their requirements. 
-                    			enableContinueArray[2] = 1; 
-                    			enableContinueButton();
-                    			
-                    			return;
-             			}
-             		} 
-        	}
-    	}
-    	enableContinueArray[2] = 0; 
-    	enableContinueButton(); 
-}
-
-function checkParty() {
-	let textbox = document.getElementById("partyTextbox");
-    
-    	document.getElementById("partyTextbox").style.borderColor = "red";
-    
-	if (textbox.value.length > 0) {
-    		document.getElementById("partyTextbox").style.borderColor = "green";
-		
-		//This part activates the "Continue"-button if all the textfields fulfill their requirements. 
-		enableContinueArray[3] = 1; 
-    		enableContinueButton();
-        	
-        	return; 
-    	}
-    	enableContinueArray[3] = 0; 
-    	enableContinueButton(); 
-}
-
-function checkMeals() {
-	let textbox = document.getElementById("mealTextbox");
-	
-	//When a button is pressed in the textfield, the border becomes red, 
-	//unless there is text in the textfield. 
-    
-    	document.getElementById("mealTextbox").style.borderColor = "red";
-    
-	if (textbox.value.length > 0) {
-    		document.getElementById("mealTextbox").style.borderColor = "green";
-		
-		//This part activates the "Continue"-button if all the textfields fulfill their requirements. 
-    		enableContinueArray[4] = 1; 
-    		enableContinueButton();
-        	
-        	return; 
-    	}
-    	enableContinueArray[4] = 0; 
-    	enableContinueButton(); 
-}
-</script>
+<script src="~/js/BookingForm.js" ></script>
