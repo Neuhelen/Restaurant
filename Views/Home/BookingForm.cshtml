@@ -2,35 +2,44 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+	ViewData["Title"] = "Booking Form";
 }
-Enter your name: <input type="text" id="nameTextbox" onkeyup="checkName()">
+
+<!-- This part creates labels and textfields that updates when a key has been pressed. -->
+
+<label for="party">Enter your name:</label>
+
+<input type="text" id="nameTextbox" onkeyup="checkName()">
 
 <br><br>
 
-<!-- This part creates text and textfield that updates when a key is pressed. -->
+<label for="party">Enter your email:</label>
 
-Enter your email: <input type="text" id="emailTextbox" onkeyup="checkEmail()">
+<input type="text" id="emailTextbox" onkeyup="checkEmail()">
 
 <br><br>
 
-Enter your address: <input type="text" id="addressTextbox" onkeyup="checkAddress()">
+<label for="party">Enter your address:</label>
+
+<input type="text" id="addressTextbox" onkeyup="checkAddress()">
 
 <br><br>
 
 <label for="party">Enter the size of your party:</label>
-<br>
-<br>
 
-Enter the size of your party: <input type="text" id="partyTextbox" name="party" onkeyup="checkParty()">
+<input type="text" id="partyTextbox" name="party" onkeyup="checkParty()">
 
 <br><br>
 
-Enter the meals of your party: <input type="text" id="mealTextbox" onkeyup="checkMeals()">
+<label for="party">Enter the size of your party:</label>
+
+<input type="text" id="mealTextbox" onkeyup="checkMeals()">
 
 <br><br>
 
-Enter any additional notes (Food allergies or special needs): <input type="text" id="notesTextbox" onkeyup="checkNotes()">
+<label for="party">Enter any additional notes (Food allergies or special needs):</label>
 
+ <input type="text" id="notesTextbox" onkeyup="checkNotes()">
 
 <br><br>
 
@@ -44,9 +53,11 @@ enableContinueArray.push(0, 0, 0, 0, 0);
 
 const continueButton = document.getElementById("continueButton");
 
+//This part disables the button by default. 
+
 continueButton.disabled = true;
 
-//This function enables the "continueButton". 
+//This function enables the "continueButton" if the different needed textfields' requirements are fulfilled. 
 function enableContinueButton() {
 	let enableCounter = 0; 
 	for (let i = 0; i < enableContinueArray.length; i++) {
