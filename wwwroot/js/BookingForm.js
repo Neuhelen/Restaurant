@@ -1,11 +1,7 @@
-const enableContinueArray = [];
-
-enableContinueArray.push(0, 0, 0, 0, 0);
-
+const enableContinueArray = [0, 0, 0, 0, 0, 0];
 const continueButton = document.getElementById("continueButton");
 
 //This part disables the button by default. 
-
 continueButton.disabled = true;
 
 //This function enables the "continueButton" if the different needed textfields' requirements are fulfilled. 
@@ -185,3 +181,27 @@ function checkMeals() {
 	enableContinueArray[5] = 0;
 	enableContinueButton();
 }
+
+function checkNotes() {
+    let textbox = document.getElementById("notesTextbox");
+}
+
+
+
+// Function to store form data in local storage
+// Currently stored on local storage, it should check for if received in the database in the end product
+function storeFormData() {
+    localStorage.setItem('bookingDate', document.getElementById("bookingDate").value);
+    localStorage.setItem('name', document.getElementById("nameTextbox").value);
+    localStorage.setItem('email', document.getElementById("emailTextbox").value);
+    localStorage.setItem('phoneNumber', document.getElementById("phoneTextbox").value);
+    localStorage.setItem('partySize', document.getElementById("partyTextbox").value);
+    localStorage.setItem('additionalNotes', document.getElementById("notesTextbox").value);
+}
+
+// Call the above function when "Continue" button is clicked
+continueButton.addEventListener("click", function() {
+    storeFormData();
+    // Navigate to BookingDone view (assuming it's in the same directory)
+    window.location.href = 'BookingDone';
+});
