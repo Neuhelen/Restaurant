@@ -5,7 +5,10 @@ using System.Data.Entity.Migrations.History;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Resturant.Models;
- 
+using DbContext = Microsoft.EntityFrameworkCore.DbContext;
+using Microsoft.EntityFrameworkCore;
+
+
 namespace Resturant.Identity
 {
     public class MySqlHistoryContext : HistoryContext
@@ -58,10 +61,16 @@ namespace Resturant.Identity
         }
     }
 
-    class MySqlDbContext : Microsoft.EntityFrameworkCore.DbContext
+    public class MySqlDbContext : DbContext
     {
-        public Microsoft.EntityFrameworkCore.DbSet<string> DisplayName { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<string> Phone { get; set; }
+        //public Microsoft.EntityFrameworkCore.DbSet<string> DisplayName { get; set; }
+        //public Microsoft.EntityFrameworkCore.DbSet<string> Phone { get; set; }
+
+        public MySqlDbContext(DbContextOptions<MySqlDbContext> options)
+            : base(options)
+        {
+
+        }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //=> optionsBuilder.UseMySql("SERVER=sql.anders-jensen.dk; uid=G9WT; password=7niJwCe#XsyH!y2M4Fgw; database=resturant;", new MySqlServerVersion(new Version(8, 0, 34)));
