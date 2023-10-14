@@ -26,13 +26,14 @@ body {
 .hero-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    height: 100%;
 }
 
 .hero-left {
-    height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-right: 10%;
 }
 
 .hero-left > h1, h2, p {
@@ -41,10 +42,11 @@ body {
 }
 
 .hero-right {
-    height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    margin-left: 10%;
 }
 
 .hero-right {
@@ -52,5 +54,33 @@ body {
     max-height: 100%;
 }
 
-/* SECOND SECTION */
+img {
+    width: 100%;
+    height: auto;
+}
 
+/* SECOND SECTION */
+.second-hero {
+    height: 80vh;
+}
+
+.about-us {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+}
+
+.about-left {
+    overflow: hidden;
+    margin-right: 10%;
+}
+
+.about-right {
+    overflow: hidden;
+    margin-left: 10%;
+}
+
+.team-pic {
+    border-radius: 5%;
+}
