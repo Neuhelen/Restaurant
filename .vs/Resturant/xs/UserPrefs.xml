@@ -1,17 +1,17 @@
 ﻿<Properties StartupConfiguration="{CACBA399-4344-4BDF-A848-6DD01B48C774}|Default" GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.ItemProperties.Resturant PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Views/Home/Index.cshtml">
     <Files>
-      <File FileName="Program.cs" Line="1" Column="1" />
-      <File FileName="Views/Login/Index.cshtml" Line="1" Column="1" />
-      <File FileName="Views/Home/Index.cshtml" Line="37" Column="1" />
-      <File FileName="wwwroot/css/site.css" Line="57" Column="1" NotebookId="1" />
+      <File FileName="Program.cs" />
+      <File FileName="Views/Login/Index.cshtml" />
+      <File FileName="Views/Home/Index.cshtml" Line="52" Column="17" />
+      <File FileName="wwwroot/css/site.css" Line="85" Column="21" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
