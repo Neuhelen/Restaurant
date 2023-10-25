@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!-- MENU -->
+
+<br>
+<br>
+
+<div class="menu-message">
+    <h2 id='menu-message'>Our menu is: </h2>
+</div>
+
+<script>
+    var date = new Date();
+    var hour = date.getHours();
+
+    if (hour < 12 && hour > 8) {
+        document.getElementById('menu-message').innerHTML = "Good morning! Our menu for this morning is: ";
+    } else if (hour >= 12) {
+        document.getElementById('menu-message').innerHTML = "Good afternoon! Our menu for this afternoon is: ";
+    } else if (hour >= 17) {
+        document.getElementById('menu-message').innerHTML = "Good evening! Our menu for this evening is: ";
+    } else if (hour >= 23) {
+        document.getElementById('menu-message').innerHTML = "Good night! We are sadly closed for today. Our menu for the morning is: ";
+    } else {
+        document.getElementById('menu-message').innerHTML = 'There is something wrong.';
+    }
+</script>
+
+
+<style>
+    .item1 {
+        grid-area: header;
+    }
+
+    .item2 {
+        grid-area: menu;
+    }
+
+    .item3 {
+        grid-area: main;
+    }
+
+    .item4 {
+        grid-area: right;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-areas:
+            'header header header header header header'
+            'menu main main main right right';
+        gap: 10px;
+        background-color: #2196F3;
+        padding: 10px;
+    }
+
+        .grid-container > div {
+            background-color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 20px 0;
+            font-size: 30px;
+        }
+</style>
+
+<div class="grid-container">
+    <div class="item1">Time</div>
+    <div class="item2">Id</div>
+    <div class="item3">Ingredients</div>
+    <div class="item4">Price</div>
+</div>
