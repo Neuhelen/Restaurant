@@ -9,7 +9,7 @@
 <br>
 
 <div class="menu-message">
-    <h2 id='menu-message'>Our menu is: </h2>
+    <h2 id='menu-message'>Hello! Our menu is: </h2>
 </div>
 
 <script>
@@ -22,7 +22,7 @@
         document.getElementById('menu-message').innerHTML = "Good afternoon! Our menu for this afternoon is: ";
     } else if (hour >= 17) {
         document.getElementById('menu-message').innerHTML = "Good evening! Our menu for this evening is: ";
-    } else if (hour >= 23) {
+    } else if (hour >= 23 || hour <= 8) {
         document.getElementById('menu-message').innerHTML = "Good night! We are sadly closed for today. Our menu for the morning is: ";
     } else {
         document.getElementById('menu-message').innerHTML = 'There is something wrong.';
