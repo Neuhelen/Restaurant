@@ -3,10 +3,42 @@
 *@
 @{
 }
-<!-- MENU -->
+<style>
+    
 
-<br>
-<br>
+    .item1 {
+        grid-area: id;
+    }
+
+    .item2 {
+        grid-area: meal;
+    }
+
+    .item3 {
+        grid-area: ingredients;
+    }
+
+    .item4 {
+        grid-area: price;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-areas:
+            'id meal meal ingredients ingredients ingredients ingredients price';
+        gap: 10px;
+        background-color: #70100f;
+        padding: 10px;
+    }
+
+    .grid-container > div {
+        background-color: rgba(255, 255, 255, 0.8);
+        text-align: center;
+        padding: 20px 0;
+        font-size: 30px;
+    }
+</style>
+
 
 <div class="menu-message">
     <h2 id='menu-message'>Hello! Our menu is: </h2>
@@ -30,44 +62,9 @@
 </script>
 
 
-<style>
-    .item1 {
-        grid-area: header;
-    }
-
-    .item2 {
-        grid-area: menu;
-    }
-
-    .item3 {
-        grid-area: main;
-    }
-
-    .item4 {
-        grid-area: right;
-    }
-
-    .grid-container {
-        display: grid;
-        grid-template-areas:
-            'header header header header header header'
-            'menu main main main right right';
-        gap: 10px;
-        background-color: #2196F3;
-        padding: 10px;
-    }
-
-        .grid-container > div {
-            background-color: rgba(255, 255, 255, 0.8);
-            text-align: center;
-            padding: 20px 0;
-            font-size: 30px;
-        }
-</style>
-
 <div class="grid-container">
-    <div class="item1">Time</div>
-    <div class="item2">Id</div>
+    <div class="item1">Id</div>
+    <div class="item2">Meal</div>
     <div class="item3">Ingredients</div>
     <div class="item4">Price</div>
 </div>
