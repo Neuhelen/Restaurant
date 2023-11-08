@@ -4,66 +4,91 @@
 @{
 }
 <style>
-    
-    .item1 {
-        grid-area: id;
-    }
-
-    .item2 {
-        grid-area: meal;
-    }
-
-    .item3 {
-        grid-area: ingredients;
-    }
-
-    .item4 {
-        grid-area: price;
-    }
-
     .grid-container {
         display: grid;
-        grid-template-areas:
-            'id meal meal ingredients ingredients ingredients ingredients price';
+        grid-template-columns: repeat(4, 1fr);
         gap: 10px;
         background-color: #70100f;
         padding: 10px;
     }
 
-    .grid-container > div {
+    .grid-item {
         background-color: rgba(255, 255, 255, 0.8);
         text-align: center;
         padding: 20px 0;
-        font-size: 30px;
+        font-size: 20px;
     }
 </style>
 
-
+<!-- This is a basic message, which is overwritten in the next part to make a dynamic message based on the time of the day -->
 <div class="menu-message">
     <h2 id='menu-message'>Hello! Our menu is: </h2>
 </div>
 
 <script>
+    //This part gets the hour of the day. 
     var date = new Date();
     var hour = date.getHours();
 
+    var menuItems = [
+        { id: 1, meal: 'Burger', ingredients: 'Beef, cheese, lettuce, tomato', price: '$8.99' },
+        { id: 2, meal: 'Pizza', ingredients: 'Dough, sauce, cheese, pepperoni', price: '$10.99' },
+        { id: 3, meal: 'Salad', ingredients: 'Lettuce, tomato, cucumber, dressing', price: '$5.99' },
+        //More menu items can be added by copying one of the lines above and changing the information therein.
+    ];
+
+    //This parts changes the message and menu based on the time of day. 
+    //The menu shown during breakfast time and night time is the same, but the messages are different. 
     if (hour < 12 && hour > 8) {
         document.getElementById('menu-message').innerHTML = "Good morning! Our menu for this morning is: ";
     } else if (hour >= 12) {
         document.getElementById('menu-message').innerHTML = "Good afternoon! Our menu for this afternoon is: ";
+        menuItems = [
+            { id: 1, meal: 'Burger Lunch', ingredients: 'Beef, cheese, lettuce, tomato', price: '$8.99' },
+            { id: 2, meal: 'Pizza Lunch', ingredients: 'Dough, sauce, cheese, pepperoni', price: '$10.99' },
+            { id: 3, meal: 'Salad Lunch', ingredients: 'Lettuce, tomato, cucumber, dressing', price: '$5.99' },
+            { id: 4, meal: 'Definitely not a Salad Lunch', ingredients: 'Lettuce, tomato, cucumber, dressing', price: '$5.99' },
+            //More menu items can be added by copying one of the lines above and changing the information therein. 
+        ];
     } else if (hour >= 17) {
         document.getElementById('menu-message').innerHTML = "Good evening! Our menu for this evening is: ";
+        menuItems = [
+            { id: 1, meal: 'Burger Dinner', ingredients: 'Beef, cheese, lettuce, tomato', price: '$8.99' },
+            { id: 2, meal: 'Pizza Dinner', ingredients: 'Dough, sauce, cheese, pepperoni', price: '$10.99' },
+            { id: 3, meal: 'Salad Dinner', ingredients: 'Lettuce, tomato, cucumber, dressing', price: '$5.99' },
+            //More menu items can be added by copying one of the lines above and changing the information therein.
+        ];
     } else if (hour >= 23 || hour <= 8) {
         document.getElementById('menu-message').innerHTML = "Good night! We are sadly closed for today. Our menu for the morning is: ";
     } else {
+        //This is a basic error message used for debugging. 
         document.getElementById('menu-message').innerHTML = 'There is something wrong.';
     }
 </script>
 
+<div class="grid-container"></div>
 
-<div class="grid-container">
-    <div class="item1">Id</div>
-    <div class="item2">Meal</div>
-    <div class="item3">Ingredients</div>
-    <div class="item4">Price</div>
-</div>
+<script>
+    //This part gets the grid container. 
+    const gridContainer = document.querySelector('.grid-container');
+
+    //This part creates and appends title elements. 
+    const titles = ['Id', 'Meal', 'Ingredients', 'Price'];
+
+    titles.forEach(title => {
+        const titleElement = document.createElement('div');
+        titleElement.classList.add('grid-item');
+        titleElement.textContent = title;
+        gridContainer.appendChild(titleElement);
+    });
+
+    //This part populates the grid container with items using the different keys of each menu element from the menuItem array. 
+    menuItems.forEach(menuItem => {
+        for (let key in menuItem) {
+            const menuItemElement = document.createElement('div');
+            menuItemElement.classList.add('grid-item');
+            menuItemElement.textContent = menuItem[key];
+            gridContainer.appendChild(menuItemElement);
+        }
+    });
+</script>
