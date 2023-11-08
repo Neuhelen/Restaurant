@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Resturant.Identity;
 using Resturant.Models;
 
@@ -7,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ResturantContext>(options =>
+options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8,0,34))));
 
 // MySql connection setup for EntityFramework
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
