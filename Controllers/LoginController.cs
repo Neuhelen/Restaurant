@@ -32,6 +32,4 @@ namespace Resturant.Controllers
 
     }
 
-
-
 }
