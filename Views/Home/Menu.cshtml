@@ -1,0 +1,69 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<style>
+    
+    .item1 {
+        grid-area: id;
+    }
+
+    .item2 {
+        grid-area: meal;
+    }
+
+    .item3 {
+        grid-area: ingredients;
+    }
+
+    .item4 {
+        grid-area: price;
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-areas:
+            'id meal meal ingredients ingredients ingredients ingredients price';
+        gap: 10px;
+        background-color: #70100f;
+        padding: 10px;
+    }
+
+    .grid-container > div {
+        background-color: rgba(255, 255, 255, 0.8);
+        text-align: center;
+        padding: 20px 0;
+        font-size: 30px;
+    }
+</style>
+
+
+<div class="menu-message">
+    <h2 id='menu-message'>Hello! Our menu is: </h2>
+</div>
+
+<script>
+    var date = new Date();
+    var hour = date.getHours();
+
+    if (hour < 12 && hour > 8) {
+        document.getElementById('menu-message').innerHTML = "Good morning! Our menu for this morning is: ";
+    } else if (hour >= 12) {
+        document.getElementById('menu-message').innerHTML = "Good afternoon! Our menu for this afternoon is: ";
+    } else if (hour >= 17) {
+        document.getElementById('menu-message').innerHTML = "Good evening! Our menu for this evening is: ";
+    } else if (hour >= 23 || hour <= 8) {
+        document.getElementById('menu-message').innerHTML = "Good night! We are sadly closed for today. Our menu for the morning is: ";
+    } else {
+        document.getElementById('menu-message').innerHTML = 'There is something wrong.';
+    }
+</script>
+
+
+<div class="grid-container">
+    <div class="item1">Id</div>
+    <div class="item2">Meal</div>
+    <div class="item3">Ingredients</div>
+    <div class="item4">Price</div>
+</div>

@@ -28,6 +28,14 @@ namespace Resturant.Controllers
             getdata();
             return View();
         }
+        public IActionResult BookingForm()
+        {
+            return View();
+        }
+        public IActionResult BookingDone()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

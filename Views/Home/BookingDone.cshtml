@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Booking Done";
+}
+
+
+<h1>Booking Complete</h1>
+
+<p>Your booking details are as follows:</p>
+
+<div id="bookingDetails" class="booking-details">
+    <div>
+        <span class="details-label">Date:</span>
+        <span id="bookingDate" class="details-content"></span>
+    </div>
+    <div>
+        <span class="details-label">Name:</span>
+        <span id="name" class="details-content"></span>
+    </div>
+    <div>
+        <span class="details-label">Email:</span>
+        <span id="email" class="details-content"></span>
+    </div>
+    <div>
+        <span class="details-label">Phone Number:</span>
+        <span id="phoneNumber" class="details-content"></span>
+    </div>
+    <div>
+        <span class="details-label">Party Size:</span>
+        <span id="partySize" class="details-content"></span>
+    </div>
+    <div>
+        <span class="details-label">Additional Notes:</span>
+        <span id="additionalNotes" class="details-content"></span>
+    </div>
+</div>
+
+
+
+<style>
+	.booking-details {
+		border: 2px solid #000;
+		padding: 20px;
+		width: 400px;
+		margin: auto;
+	}
+	.details-label {
+		font-weight: bold;
+		margin-right: 10px;
+	}
+	.details-content {
+		font-family: 'Courier New', Courier, monospace;
+	}
+</style>
+
+<script src="~/js/BookingDone.js" ></script>
