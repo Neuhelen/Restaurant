@@ -2,6 +2,9 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 using Resturant.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Transactions;
+using System.Data.Common;
 
 namespace Resturant.Models
 {

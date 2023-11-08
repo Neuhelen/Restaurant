@@ -12,6 +12,13 @@ namespace Resturant.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly MySqlDbContext _context;
+
+        public LoginController(MySqlDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -41,6 +48,12 @@ namespace Resturant.Controllers
             if (vmUser.UserName == null)
                 return View("Index", vmUser);
             // Default UserStore constructor uses the default connection string named: DefaultConnection
+
+            //bool ensureCreated = _context.Database.EnsureCreated();
+
+            //bool canConnect = _context.Database.CanConnect();
+
+
             var userStore = new UserStore<IdentityUser>();
             var manager = new UserManager<IdentityUser>(userStore);
 

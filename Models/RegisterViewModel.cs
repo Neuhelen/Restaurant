@@ -16,5 +16,6 @@ namespace Resturant.Models
 
         //Used for feedback to the user if the registration was successfull or not.
         public IdentityResult Result { get; set; }
+
     }
 }
