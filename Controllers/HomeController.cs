@@ -34,6 +34,11 @@ namespace Resturant.Controllers
 			return View();
 		}
 
+        public IActionResult BookingCalendar()
+        {
+            return View();
+        }
+
         public IActionResult BookingDone()
 		{
 			return View();
