@@ -1,6 +1,4 @@
-﻿/bin
-/obj
-/.vs
-/Migrations
-.vs/Resturant/xs/project-cache/Resturant-Debug.json
-.vs/Resturant/xs/UserPrefs.xml
+﻿bin
+obj
+.vs
+Migrations
