@@ -1,32 +1,64 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Resturant.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Resturant.Models;
-
+using System;
+// Microsoft.EntityFrameworkCore.DbContext
+// Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext
 
 var builder = WebApplication.CreateBuilder(args);
+string? connectionString = builder.Configuration.GetConnectionString("LocalConnection");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ResturantContext>(options =>
-options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8,0,34))));
+builder.Services.AddDbContext<ResturantContext>(options => {
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 34)));
+    options.LogTo(Console.WriteLine, LogLevel.Information);
+});
 
-// MySql connection setup for EntityFramework
-string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-var serverVersion = new MySqlServerVersion(new Version(8, 0, 34));
-//builder.Services.AddDbContext<MySqlDbContext>();
-builder.Services.AddDbContext<MySqlDbContext>(dbContextOptions => dbContextOptions
-        .UseMySql(connectionString, serverVersion)
 
-        // The following three options help with debugging, but should
-        // be changed or removed for production.
-        .LogTo(Console.WriteLine, LogLevel.Information)
-        .EnableSensitiveDataLogging()
-        .EnableDetailedErrors()
-);
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+        .AddEntityFrameworkStores<ResturantContext>()
+        .AddRoleManager<RoleManager<IdentityRole>>()
+        .AddSignInManager<SignInManager<IdentityUser>>()
+        .AddDefaultTokenProviders();
 
+builder.Services.AddRazorPages();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Password settings.
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 3;
+    options.Password.RequiredUniqueChars = 1;
+
+    // Lockout settings.
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+    // User settings.
+    options.User.AllowedUserNameCharacters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    options.User.RequireUniqueEmail = false;
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    // Cookie settings
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+    options.LoginPath = "/User/Index";
+    options.AccessDeniedPath = "/User/AccessDenied";
+    options.SlidingExpiration = true;
+});
+// ### Login end ###
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
