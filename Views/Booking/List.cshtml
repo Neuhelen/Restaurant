@@ -1,0 +1,37 @@
+﻿@model List<Booking>
+@{
+    ViewData["Title"] = "Booking List";
+}
+
+<h1>Booking List</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Party Size</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Booking booking in Model)
+        {
+            <tr data-id="@booking.Id">
+                <td>@booking.From.ToString()</td>
+                <td>@booking.Name</td>
+                <td>@booking.Phone</td>
+                <td>@booking.PartySize</td>
+                <td>@booking.Description</td>
+                <td><button onclick="edit(@booking.Id)">Edit</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function edit(id) {
+        window.location.href = '/Booking/Edit/' + id;
+    }
+</script>

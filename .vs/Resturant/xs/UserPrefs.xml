@@ -1,29 +1,25 @@
-﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{CACBA399-4344-4BDF-A848-6DD01B48C774}|Default">
+﻿<Properties StartupConfiguration="{CACBA399-4344-4BDF-A848-6DD01B48C774}|Default" GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.ItemProperties.Resturant PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/BookingController.cs">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Views/Booking/Edit.cshtml">
     <Files>
-      <File FileName="Controllers/BookingController.cs" Line="18" Column="10" />
-      <File FileName="Views/Shared/_Layout.cshtml" Line="1" Column="1" />
-      <File FileName="Resturant.csproj" Line="26" Column="37" />
-      <File FileName="Views/Booking/Edit.cshtml" Line="1" Column="1" />
+      <File FileName="Controllers/BookingController.cs" Line="27" Column="1" />
+      <File FileName="Views/Shared/_Layout.cshtml" />
+      <File FileName="Resturant.csproj" />
+      <File FileName="Views/Booking/Edit.cshtml" Line="80" Column="91" />
+      <File FileName="wwwroot/js/BookingForm.js" Line="199" Column="92" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Resturant">
             <Node name="Resturant">
-              <Node name="Migrations" expanded="True">
-                <Node name="20231122131357_migration001.cs" expanded="True" />
-              </Node>
-              <Node name="Models" expanded="True" />
-              <Node name="Views" expanded="True">
-                <Node name="Booking" expanded="True" />
-                <Node name="Home" expanded="True" />
-                <Node name="Shared" expanded="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="Views">
+                <Node name="Booking">
+                  <Node name="Edit.cshtml" selected="True" />
+                </Node>
               </Node>
               <Node name="wwwroot" expanded="True">
                 <Node name="js" expanded="True" />
@@ -34,6 +30,8 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

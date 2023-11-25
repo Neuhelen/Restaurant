@@ -12,6 +12,11 @@
             Description = description;
         }
 
+        public Booking()
+        {
+
+        }
+
         public int Id { get; set; }
 
         public DateTime From { get; set; }
@@ -23,6 +28,5 @@
         public int PartySize { get; set; }
 
         public string Description { get; set; }
-
     }
 }
