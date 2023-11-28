@@ -1,46 +1,45 @@
 $(document).ready(function () {
+    if (isDarkModeEnabled()) {
+        applyDarkModeStyles();
+    }
+
+    //If the dark mode button is clicked, toggle between light mode and dark mode. 
     $("#darkModeButton").click(function () {
         toggleDarkMode();
     });
 
-    // Function to toggle dark mode
+    //This function toggles between light mode and dark mode
     function toggleDarkMode() {
         if (isDarkModeEnabled()) {
-            // If dark mode is enabled, disable it
+            //If dark mode is enabled, disable it
             disableDarkMode();
-            window.location.reload(true);
         } else {
-            // If dark mode is disabled, enable it
+            //If dark mode is disabled, enable it
             enableDarkMode();
-            window.location.reload(true);
         }
     }
 
-    // Function to check if dark mode is enabled
     function isDarkModeEnabled() {
         return document.cookie.includes("DarkMode=true");
     }
 
-    // Function to enable dark mode
+    //This function enables dark mode by creating a Cookie
     function enableDarkMode() {
-        var cookie = new CookieHeaderValue("DarkMode", "true");
-        cookie.Expires = DateTimeOffset.Now.AddDays(30);
-        cookie.Domain = window.location.hostname;
-        cookie.Path = "/";
+        document.cookie = "DarkMode=true; expires=" + new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString() + "; path=/";
 
-        document.cookie = cookie.toString();
         applyDarkModeStyles();
     }
 
-    // Function to disable dark mode
+    //This function disables dark mode by setting the Cookie's expiration date in the past
     function disableDarkMode() {
-        // Set a cookie with an expiration date in the past to remove the existing cookie
         document.cookie = "DarkMode=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        // Add logic to remove dark mode styles from your page
+
+        //This part removes the dark mode styles: 
+        $('body').removeClass('dark-mode');
     }
 
-    // Function to apply dark mode styles
+    //This function applies the dark mode styles
     function applyDarkModeStyles() {
-        // Add logic to apply dark mode styles to your page
+        $('body').toggleClass('dark-mode');
     }
 });
