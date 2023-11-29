@@ -2,6 +2,16 @@
 {
     public class Booking
     {
+        public Booking(int id, DateTime from, string name, string phone, int partySize, string description)
+        {
+            Id = id;
+            From = from;
+            Name = name;
+            Phone = phone;
+            PartySize = partySize;
+            Description = description;
+        }
+
         public int Id { get; set; }
 
         public DateTime From { get; set; }

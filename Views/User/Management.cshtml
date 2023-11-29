@@ -1,0 +1,355 @@
+﻿@model ManagementViewModel
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims;
+@using ClaimTypes = System.Security.Claims.ClaimTypes;
+@using System.Text.Encodings
+@using System.Text;
+
+@{
+    ViewData["Title"] = "User Management Page";
+}
+
+<style>
+    thead {
+        font-family: sans-serif;
+        font-weight: bold;
+        background-color: lightgray;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+        th:first-child, td:first-child {
+            font-family: monospace;
+        }
+
+        th:nth-child(4), td:nth-child(4) {
+            width: 150px;
+            overflow: hidden;
+            /* Adding ellipsis to indicate hidden content */
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+    .deleteUserBtn, .cancelUserEditBtn, .removeRoleBtn {
+        background-color: salmon;
+    }
+
+    .saveUserEditBtn, .addRoleSelectBtn {
+        background-color: LightGreen;
+    }
+    .addRoleSelectBtn {
+        font-weight: bold;
+    }
+</style>
+    
+<h2>Users</h2>
+<table id="userTable">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>UserName</th>
+            <th>Roles</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(ManagementViewModel.UserWithClaims user in Model.Users)
+        {
+            <tr data-userId="@user.Id">
+                <td data-syskey="Id">@user.Id</td>
+                <td data-syskey="UserName">@user.UserName</td>
+                <td data-syskey="Roles">@Html.Raw(string.Join(", ", user.Roles))</td>
+                <td data-syskey="Action">
+                    <button class="enableEditBtn" onclick="toggleEdit('@user.Id')">Edit</button>
+                    <button class="deleteUserBtn" onclick="deleteUserById('@user.Id')">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+
+<h2>Roles</h2>
+<table id="roleTable">
+    <thead>
+        <tr>
+            <th>Role</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (IdentityRole role in Model.AllRoles)
+        {
+            <tr data-role="@role.Name">
+                <td>@role.Name</td>
+                <td>
+                    <button class="removeRoleBtn" onclick="removeRole('@role.Name')">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<input id="newRole" type="text" />
+<button onclick="createRole()">Create</button>
+
+<script>
+    let allRoles = [
+        //{Id: 'asdf-asdf-asdf', Name: 'admin'},
+        @Html.Raw(string.Join(',', Model.AllRoles.Select(x => $"{{Id: '{x.Id}', Name: '{x.Name}'}}")))
+    ]
+
+    // Makes the create new role button more keyboard friendly. Creates the role when enter is pressed.
+    document.getElementById('newRole').addEventListener('keypress', e => {
+        if (e.keyCode == 13) {
+            console.log('Enter');
+            createRole();
+        }
+    });
+
+
+    function createRole() {
+        let roleName = document.getElementById('newRole').value;
+        fetch('/User/CreateRole', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(roleName)
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Add the newly created role to the table.
+                    let roleTable = document.getElementById('roleTable');
+                    let tr = document.createElement('tr');
+                    tr.dataset.role = roleName;
+                    let td1 = document.createElement('td');
+                    td1.innerText = roleName;
+                    let td2 = document.createElement('td');
+                    let deleteBtn = document.createElement('button');
+                    deleteBtn.classList.add('removeRoleBtn');
+                    deleteBtn.innerText = 'Delete';
+                    deleteBtn.addEventListener('click', _ => removeRole(roleName));
+                    td2.appendChild(deleteBtn);
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    roleTable.querySelector('tbody').appendChild(tr);
+                    document.getElementById('newRole').value = '';
+                }
+                console.error('Error:', response.statusText);
+            })
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+    }
+
+    function removeRole(roleName) {
+        fetch('/User/DeleteRole', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(roleName)
+        })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('roleTable').querySelector(`tr[data-role="${roleName}"]`).remove()
+                }
+                console.error('Error:', response.statusText);
+            })
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+    }
+
+    function saveChanges(userId) {
+        let userRow = document.getElementById('userTable').querySelector(`tr[data-userid="${userId}"]`);
+        let cells = Array.from(userRow.children);
+
+        console.log(cells.find(x => x.dataset.syskey == "Roles").firstChild.value);
+        
+        // Get list of selected roles from the select elements as a list of strings
+        let newRoles = Array.from(cells.find(x => x.dataset.syskey == "Roles").querySelectorAll('select')).map(select => select.value)
+
+        fetch(`/User/Edit/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                UserName: cells.find(x => x.dataset.syskey == "UserName").firstChild.value,
+                Roles: newRoles
+                // Add other changeable variables here.
+            })
+        })
+            .then(response => {
+                if (response.ok) {
+                    disableEdit(userId);
+                    return response.text();
+                }
+                console.error('Error:', response.statusText);
+            })
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+    }
+
+    function createRoleSelectElement(selected) {
+        let select = document.createElement('select');
+        allRoles.forEach(r => {
+            let option = document.createElement('option');
+            option.value = r.Name;
+            option.innerHTML = r.Name;
+            if (r.Name == selected) {
+                option.selected = 'True';
+            }
+            select.appendChild(option);
+        });
+        return select;
+    }
+
+    function createRoleSelectDiv(currentRole) {
+        let div = document.createElement('div');
+        let select = createRoleSelectElement(currentRole);
+        div.appendChild(select);
+
+        let removeRoleBtn = document.createElement('button');
+        removeRoleBtn.innerText = 'X';
+        removeRoleBtn.classList.add('removeRoleBtn');
+        removeRoleBtn.addEventListener('click', _ => div.remove());
+        div.appendChild(removeRoleBtn);
+        return div
+    }
+
+    function enableEdit(userId){
+        let userTable = document.getElementById('userTable');
+        let userRow = userTable.querySelector(`tr[data-userid="${userId}"]`);
+
+        // Saving the current data for the user in case the user desides to cancel the editation.
+        let oldUserRow = userRow.parentElement.appendChild(userRow.cloneNode(true));
+        oldUserRow.style.display = 'none';
+
+        Array.from(userRow.children).forEach(cell => {
+            switch (cell.dataset.syskey) {
+                case 'Id':
+                case 'NormalizedUserName':
+                    break;
+                case 'Roles':
+                    let roles = cell.innerHTML.split(', ');
+                    cell.innerHTML = '';
+                    roles.forEach(role => {
+                        cell.appendChild(createRoleSelectDiv(role))
+                    });
+
+                    let addBtn = document.createElement('button');
+                    addBtn.innerText = '+';
+                    addBtn.classList.add('addRoleSelectBtn');
+                    addBtn.addEventListener('click', _ => cell.insertBefore(createRoleSelectDiv(''), addBtn));
+                    cell.appendChild(addBtn);
+
+                    break;
+
+                case 'Action':
+                    userTable.querySelectorAll('.enableEditBtn').forEach(el => el.style.display = 'none');
+                    cell.querySelector('.deleteUserBtn').style.display = 'none';
+
+                    let saveBtn = document.createElement('button');
+                    saveBtn.innerText = "Save";
+                    saveBtn.classList.add('saveUserEditBtn');
+                    saveBtn.addEventListener('click', _ => saveChanges(userId));
+                    cell.appendChild(saveBtn);
+
+                    let cancelBtn = document.createElement('button');
+                    cancelBtn.innerText = "Cancel";
+                    cancelBtn.classList.add('cancelUserEditBtn');
+                    cancelBtn.addEventListener('click', _ => {
+                        oldUserRow.style.display = 'table-row';
+                        userRow.remove();
+                        userRow = oldUserRow;
+                        userTable.querySelectorAll('.enableEditBtn').forEach(btn => btn.style.display = 'inline-block');
+                    });
+                    cell.appendChild(cancelBtn);
+                    break;
+
+                default:
+                    let input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = cell.dataset.syskey;
+                    input.value = cell.innerText;
+                    cell.innerText = '';
+                    cell.appendChild(input);
+                    break;
+            }
+        });
+    }
+
+    function disableEdit(userId) {
+        let userTable = document.getElementById('userTable');
+        let userRow = userTable.querySelector(`tr[data-userid="${userId}"]`);
+        Array.from(userRow.children).forEach(cell => {
+            switch (cell.dataset.syskey) {
+                case 'Id':
+                case 'NormalizedUserName':
+                    break;
+
+                case 'Roles':
+                    // Sets the content of the cell to the values of the select elements.
+                    cell.innerHTML = Array.from(cell.querySelectorAll('select')).map(select => select.value).join(', ')
+                    break;
+
+                case 'Action':
+                    cell.querySelectorAll('.saveUserEditBtn, .cancelUserEditBtn').forEach(el => el.remove())
+                    userTable.querySelectorAll('.enableEditBtn').forEach(el => el.style.display = '');
+                    cell.querySelector('.deleteUserBtn').style.display = '';
+                    break;
+
+                default:
+                    cell.innerHTML = cell.firstChild.value;
+
+            }
+        });
+    }
+
+    function toggleEdit(userId) {
+        let userTable = document.getElementById('userTable');
+        let userRow = userTable.querySelector(`tr[data-userid="${userId}"]`);
+        let isEditEnabled = userRow.dataset?.isEditEnabled ?? false;
+        if (!isEditEnabled)
+            enableEdit(userId)
+        else
+            disableEdit(userId)
+        userRow.dataset.isEditEnabled = !isEditEnabled
+    }
+
+    function deleteUserById(userId) {
+        fetch(`/User/Delete/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                // You may need to include authentication headers or other headers as needed
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('User deleted successfully:', data);
+                
+                //Remove the user from the on screen usertable.
+                document.getElementById('userTable').querySelector(`tr[data-userid="${userId}"]`).remove();
+            })
+            .catch(error => {
+                console.error('Error deleting user:', error);
+            });
+    }
+</script>

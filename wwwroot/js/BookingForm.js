@@ -203,5 +203,5 @@ function storeFormData() {
 continueButton.addEventListener("click", function() {
     storeFormData();
     // Navigate to BookingDone view (assuming it's in the same directory)
-    window.location.href = 'BookingDone';
+    window.location.href = 'Done';
 });

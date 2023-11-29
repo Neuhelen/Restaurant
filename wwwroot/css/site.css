@@ -14,5 +14,73 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  margin-bottom: 60px
+}
+
+/* FIRST SECTION */
+
+.hero {
+    height: 100vh;
+}
+
+.hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+}
+
+.hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 10%;
+}
+
+.hero-left > h1, h2, p {
+    color: black;
+    padding: 5px;
+}
+
+.hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-left: 10%;
+}
+
+.hero-right {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+/* SECOND SECTION */
+.second-hero {
+    height: 50vh;
+}
+
+.about-us {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+}
+
+.about-left {
+    overflow: hidden;
+    margin-right: 10%;
+}
+
+.about-right {
+    overflow: hidden;
+    margin-left: 10%;
+}
+
+.team-pic {
+    border-radius: 5%;
 }

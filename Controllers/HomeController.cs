@@ -25,7 +25,11 @@ namespace Resturant.Controllers
 
         public IActionResult Privacy()
         {
-            getdata();
+            return View();
+        }
+        
+        public IActionResult Menu()
+        {
             return View();
         }
 
@@ -70,44 +74,6 @@ namespace Resturant.Controllers
                 Number = number;
                 Truefalse = truefalse;
             }
-        }
-
-        private List<Test> getdata()
-        {
-            List<Test> tests = new List<Test>();
-            MySqlConnection connect = new MySqlConnection("SERVER=sql.anders-jensen.dk; uid=G9WT; password=7niJwCe#XsyH!y2M4Fgw; database=resturant;");
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM resturant.test;");
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = connect;
-            connect.Open();
-            try
-            {
-                MySqlDataReader dr;
-                dr = cmd.ExecuteReader();
-                while (dr.Read())
-                {
-                    tests.Add(new Test(
-                        dr.GetInt32("idtest"),
-                        dr.GetString("test"),
-                        dr.GetInt32("number"),
-                        dr.GetBoolean("truefalse")
-                    ));
-
-                }
-                dr.Close();
-            }
-            catch (Exception ex)
-            {
-                Debugger.Break();
-            }
-            finally
-            {
-                if (connect.State == ConnectionState.Open)
-                {
-                    connect.Close();
-                }
-            }
-            return tests;
         }
     }
 }
