@@ -20,24 +20,26 @@
 </style>
 
 <!-- This part creates labels and textfields that updates when a key has been pressed. -->
-<div class="grid-container">
-	<div class="grid-item"><label for="bookingDate">Enter the date you wish to book:</label></div>
-	<div class="grid-item"><input type="date" id="bookingDate" onchange="checkDate()"></div>
-	<div class="grid-item"><label for="party">Enter your name:</label></div>
-	<div class="grid-item"><input type="text" id="nameTextbox" onkeyup="checkName()"></div>
-	<div class="grid-item"><label for="party">Enter your email:</label></div>
-	<div class="grid-item"><input type="text" id="emailTextbox" onkeyup="checkEmail()"></div>
-	<div class="grid-item"><label for="party">Enter your phone number:</label></div>
-	<div class="grid-item"><input type="number" id="phoneTextbox" onkeyup="checkPhoneNumber()"></div>
-	<div class="grid-item"><label for="party">Enter the size of your party:</label></div>
-	<div class="grid-item"><input type="number" id="partyTextbox" name="party" onkeyup="checkParty()"></div>
-	<div class="grid-item"><label for="party">Enter any additional notes <br>(Food allergies or special needs):</label></div>
-	<div class="grid-item"><input type="text" id="notesTextbox" onkeyup="checkNotes()"></div>
-</div>
+<form method="post" action="/Booking/Done">
+    <div class="grid-container">
+        <div class="grid-item"><label for="bookingDate">Enter the date you wish to book:</label></div>
+        <div class="grid-item"><input type="date" id="bookingDate" name="From" onchange="checkDate()"></div>
+        <div class="grid-item"><label for="party">Enter your name:</label></div>
+        <div class="grid-item"><input type="text" id="nameTextbox" name="Name" onkeyup="checkName()"></div>
+        <div class="grid-item"><label for="party">Enter your email:</label></div>
+        <div class="grid-item"><input type="text" id="emailTextbox" name="Email" onkeyup="checkEmail()"></div>
+        <div class="grid-item"><label for="party">Enter your phone number:</label></div>
+        <div class="grid-item"><input type="number" id="phoneTextbox" name="Phone" onkeyup="checkPhoneNumber()"></div>
+        <div class="grid-item"><label for="party">Enter the size of your party:</label></div>
+        <div class="grid-item"><input type="number" id="partyTextbox" name="PartySize" onkeyup="checkParty()"></div>
+        <div class="grid-item"><label for="party">Enter any additional notes <br>(Food allergies or special needs):</label></div>
+        <div class="grid-item"><input type="text" id="notesTextbox" name="Description" onkeyup="checkNotes()"></div>
+        <!-- This part creates a button. -->
+        <button id="continueButton" type="submit">Continue</button>
+    </div>
+</form>
 
 <br><br>
 
-<!-- This part creates a button. -->
-<button id="continueButton">Continue</button>
 
 <script src="~/js/BookingForm.js" ></script>
