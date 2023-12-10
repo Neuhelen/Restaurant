@@ -28,24 +28,28 @@ namespace Resturant.Controllers
         }
 
 
-        public IActionResult Index(string? message)
+        public async Task<IActionResult> Index(LoginRequest login)
         {
-            return View("Index", message);
+            return await Login(login);
         }
 
-
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginRequest login)
+        
+        public async Task<IActionResult> Login(LoginRequest login, [FromQuery] string? ReturnUrl = null)
         {
+            if(!ModelState.IsValid)
+                return View("Login");
+
             IdentityUser user = await _userManager.FindByNameAsync(login.UserName);
             
             SignInResult result = await _signInManager.PasswordSignInAsync(login.UserName, login.Password, login.RememberMe == "on", false);
             if (user == null || !result.Succeeded)
-                return View("Index", "Login failed!");
+                return View("Login", "Login failed!");
 
             // Attach claims (eg. roles) to user.
             await AddClaimsToUser(user);
 
+            if(ReturnUrl != null && ReturnUrl != string.Empty)
+                return Redirect(ReturnUrl);
             return RedirectToAction("Index", "Home");
         }
 
@@ -70,7 +74,7 @@ namespace Resturant.Controllers
 
 
         [HttpGet]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public IActionResult Register(Register user)
         {
             if (user == null) {
@@ -82,7 +86,7 @@ namespace Resturant.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> RegisterPost(Register user)
         {
             if (await _userManager.FindByNameAsync(user.UserName) != null)
@@ -113,7 +117,7 @@ namespace Resturant.Controllers
             return View("Register", user);
         }
 
-
+#if DEBUG
         public async Task<IActionResult> Check()
         {
             // Access the current user
@@ -128,9 +132,9 @@ namespace Resturant.Controllers
             
             return View("Check", new { User = user, Roles = userRoles }.ToJson());
         }
+#endif
 
-
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public IActionResult Management(ManagementViewModel model)
         {
             if(model == null)
@@ -154,10 +158,11 @@ namespace Resturant.Controllers
         [Authorize(Roles = "admin")]
         public async Task<JsonResult> Delete(string id)
         {
-            if (id == "ccc95d47-24a4-4cc6-9899-4d5f596fab64")
-                return new JsonResult("Admin user cannot be removed!");
             Console.WriteLine("Deleting user with id: " + id);
-            IdentityResult result = await _userManager.DeleteAsync(await _userManager.FindByIdAsync(id));
+            IdentityUser user = await _userManager.FindByIdAsync(id);
+            if (user.UserName == "admin") // Makes sure that the admin accound does not get accidentaly deleted
+                return new JsonResult(new { error = "Cannot delete admin account!" });
+            IdentityResult result = await _userManager.DeleteAsync(user);
             return new JsonResult(result);
         }
 
@@ -193,7 +198,7 @@ namespace Resturant.Controllers
 
 
         [HttpPost]
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         public async Task<string> CreateRole([FromBody] string newRole)
         {
             if (newRole == null || newRole == string.Empty)
@@ -223,6 +228,8 @@ namespace Resturant.Controllers
                 Response.StatusCode = 400;
                 return "Error: The request does not contain an existing role!";
             }
+            if (roleToDelete == "admin")
+                return "Cannot delete admin role!";
 
             IdentityRole roleItem = _roleManager.Roles.First(role => role.Name == roleToDelete);
             IdentityResult? deleteResult = await _roleManager.DeleteAsync(roleItem);
@@ -242,6 +249,22 @@ namespace Resturant.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        [Authorize]
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword(ChangePassword pwd)
+        {
+            var res = await _userManager.ChangePasswordAsync(await _userManager.GetUserAsync(User), pwd.Password, pwd.NewPassword);
+            if (res.Succeeded)
+                return View("Profile", "Password was changed successfully!");
+            return View("Profile", string.Join("\n\n", res.Errors.Select(x => x.Description)));
         }
     }
 

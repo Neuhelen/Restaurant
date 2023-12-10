@@ -11,9 +11,6 @@ namespace Resturant.Models
         [Required]
         public string Password { get; set; }
 
-        [Required]
-        public string ConfirmPassword { get; set; }
-
         public string Role { get; set; } = string.Empty;
 
         public List<IdentityRole> RoleList { get; set; } = new List<IdentityRole>();

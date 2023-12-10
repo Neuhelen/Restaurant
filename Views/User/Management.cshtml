@@ -16,11 +16,6 @@
         background-color: lightgray;
     }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
     th, td {
         border: 1px solid #ddd;
         padding: 8px;
@@ -40,13 +35,20 @@
 
     .deleteUserBtn, .cancelUserEditBtn, .removeRoleBtn {
         background-color: salmon;
+        border-radius: .25rem;
     }
 
     .saveUserEditBtn, .addRoleSelectBtn {
         background-color: LightGreen;
+        border-radius: .25rem;
     }
     .addRoleSelectBtn {
         font-weight: bold;
+        border-radius: .25rem;
+    }
+
+    .enableEditBtn, .createRoleBtn{
+        border-radius: .25rem;
     }
 </style>
     
@@ -54,17 +56,17 @@
 <table id="userTable">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>UserName</th>
+            @*<th>Id</th>*@
+            <th>User Name</th>
             <th>Roles</th>
-            <th>Action</th>
+            <th class="col-3">Action</th>
         </tr>
     </thead>
     <tbody>
         @foreach(ManagementViewModel.UserWithClaims user in Model.Users)
         {
             <tr data-userId="@user.Id">
-                <td data-syskey="Id">@user.Id</td>
+                @*<td data-syskey="Id">@user.Id</td>*@
                 <td data-syskey="UserName">@user.UserName</td>
                 <td data-syskey="Roles">@Html.Raw(string.Join(", ", user.Roles))</td>
                 <td data-syskey="Action">
@@ -76,6 +78,16 @@
     </tbody>
 </table>
 
+<a href="/User/Register">Register new user</a>
+<div>
+     <span>
+         Only the user it self can change its password. <br />
+        To change the password of a user, loggin the user and click the username in the upperright corner. <br />
+         This will take you to the user profile page, where there is an option to change the password.
+     </span>
+</div>
+
+<br />
 <br />
 
 <h2>Roles</h2>
@@ -83,7 +95,7 @@
     <thead>
         <tr>
             <th>Role</th>
-            <th>Action</th>
+            <th class="col-3">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -96,12 +108,16 @@
                 </td>
             </tr>
         }
+        <tr id="newRoleRow">
+            <td>
+				<input id="newRole" type="text" placeholder="New role" />
+            </td>
+            <td>
+                <button class="createRoleBtn" onclick="createRole()">Create</button>
+			</td>
+        </tr>
     </tbody>
 </table>
-
-
-<input id="newRole" type="text" />
-<button onclick="createRole()">Create</button>
 
 <script>
     let allRoles = [
@@ -112,7 +128,6 @@
     // Makes the create new role button more keyboard friendly. Creates the role when enter is pressed.
     document.getElementById('newRole').addEventListener('keypress', e => {
         if (e.keyCode == 13) {
-            console.log('Enter');
             createRole();
         }
     });
@@ -120,6 +135,8 @@
 
     function createRole() {
         let roleName = document.getElementById('newRole').value;
+        if (roleName == '')
+			return;
         fetch('/User/CreateRole', {
             method: 'POST',
             headers: {
@@ -143,12 +160,13 @@
                     td2.appendChild(deleteBtn);
                     tr.appendChild(td1);
                     tr.appendChild(td2);
-                    roleTable.querySelector('tbody').appendChild(tr);
+                    //roleTable.querySelector('tbody').appendChild(tr);
+                    roleTable.querySelector('tbody').insertBefore(tr, document.getElementById("newRoleRow"));
                     document.getElementById('newRole').value = '';
                 }
-                console.error('Error:', response.statusText);
+                else
+                    console.error('Error:', response.statusText);
             })
-            .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
     }
 
@@ -161,12 +179,11 @@
             body: JSON.stringify(roleName)
         })
             .then(response => {
-                if (response.ok) {
+                if (response.ok)
                     document.getElementById('roleTable').querySelector(`tr[data-role="${roleName}"]`).remove()
-                }
-                console.error('Error:', response.statusText);
+                else
+                    console.error('Error:', response.statusText);
             })
-            .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
     }
 
@@ -174,8 +191,6 @@
         let userRow = document.getElementById('userTable').querySelector(`tr[data-userid="${userId}"]`);
         let cells = Array.from(userRow.children);
 
-        console.log(cells.find(x => x.dataset.syskey == "Roles").firstChild.value);
-        
         // Get list of selected roles from the select elements as a list of strings
         let newRoles = Array.from(cells.find(x => x.dataset.syskey == "Roles").querySelectorAll('select')).map(select => select.value)
 
@@ -197,7 +212,6 @@
                 }
                 console.error('Error:', response.statusText);
             })
-            .then(data => console.log(data))
             .catch(error => console.error('Error:', error));
     }
 

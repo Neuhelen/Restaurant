@@ -4,6 +4,8 @@ namespace Resturant.Models
 {
     public class LoginRequest
     {
+        private string returnUrl;
+
         [Required]
         public string UserName { get; set; }
 

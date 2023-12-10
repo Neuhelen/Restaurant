@@ -31,25 +31,25 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Menu">Menu</a>
                         </li>
-                        @if (!(User.Identity?.IsAuthenticated ?? false))
+                        @if ((User.Identity?.IsAuthenticated ?? false) && User.IsInRole("admin"))
                         {
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Management">Users</a>
+                            </li>
+                        }
+                        @if (!(User.Identity?.IsAuthenticated ?? false))
+                        {
+                            <li class="nav-item ms-auto">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Login</a>
                             </li>
                         }
                         else
                         {
-                        <li class="nav-item">
+                            <li class="nav-item ms-auto">
+                                <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="User" asp-action="Profile">@(User.Identity?.Name ?? "Unknown")</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
-                            </li>
-                        }
-                        @if ((User.Identity?.IsAuthenticated ?? false) && User.IsInRole("admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Register">Register User</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Management">Manage Users</a>
                             </li>
                         }
                     </ul>

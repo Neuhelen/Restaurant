@@ -1,0 +1,90 @@
+﻿@model string
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<style>
+    #badInput{
+        display: none;
+        color: crimson;
+    }
+</style>
+
+<h1>Profile</h1>
+
+<h2>Info</h2>
+<div class="table-sm">
+    <div class="row">
+        <div class="col-1 col-sm-2 col-md-3">Username: </div>
+        <div class="col">@(User.Identity?.Name ?? "Unknown")</div>
+    </div>
+    <div class="row">
+        <div class="col-1 col-sm-2 col-md-3">Roles:</div>
+        <div class="col">@string.Join(", ", User.Claims.Where(c => c.Type.EndsWith("/claims/role")).Select(c => c.Value))</div>
+    </div>
+</div>
+
+<br />
+<h2>Change password</h2>
+<form action="/User/ChangePassword" method="post" onsubmit="return checkInput()">
+    <div class="table-sm">
+        <div>
+            <label class="col-1 col-sm-2 col-md-3" for="currentPassword">Current password</label>
+            <input id="Password" type="password" name="Password" /><br />
+        </div>
+        <div>
+            <label class="col-1 col-sm-2 col-md-3" for="NewPassword">New password</label>
+            <input id="NewPassword" type="password" name="NewPassword" /><br />
+        </div>
+        <div>
+            <label class="col-1 col-sm-2 col-md-3" for="NewPassword2">Confirm new password</label>
+            <input id="NewPassword2" type="password" /><br />
+        </div>
+        
+        <button type="submit">Submit</button>
+    </div>
+</form>
+
+<p id="badInput"></p>
+
+@if (Model != null)
+{
+    if (Model == "Password was changed successfully!")
+	{
+		<p class="serverMsg" style="color: green;">@Model</p>
+	}
+	else
+	{
+		<p class="serverMsg" style="color: crimson;">@Model</p>
+	}
+}
+
+<script>
+    function checkInput(){
+        let pwdEl = document.getElementById('Password');
+        let newPwdEl = document.getElementById('NewPassword');
+        let newPwd2El = document.getElementById('NewPassword2');
+        
+        let badInputEl = document.getElementById('badInput');
+        let serverMsgEl = document.getElementsByClassName('serverMsg');
+        if(serverMsgEl.length > 0){
+			serverMsgEl[0].style.display = 'none';
+		}
+
+        if (pwdEl.value == "") {
+            badInputEl.innerHTML = "Password cannot be empty";
+            badInputEl.style.display = 'inline-block';
+            return false;
+        }
+        if (newPwdEl.value == "") {
+            badInputEl.innerHTML = "New password cannot be empty";
+            badInputEl.style.display = 'inline-block';
+            return false;
+        }
+        if (newPwdEl.value != newPwd2El.value) {
+            badInputEl.innerHTML = "Confirmed password do not match";
+            badInputEl.style.display = 'inline-block';
+            return false;
+        }
+    }
+</script>
