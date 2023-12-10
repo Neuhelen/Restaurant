@@ -3,14 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Resturant.Models;
 using System.Net;
-using System.Security.Cryptography;
-using System.Text;
-using IdentityUser = Microsoft.AspNetCore.Identity.IdentityUser;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using NuGet.Protocol;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Linq;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 using static Resturant.Models.ManagementViewModel;
 
@@ -74,7 +70,7 @@ namespace Resturant.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public IActionResult Register(Register user)
         {
             if (user == null) {
@@ -86,7 +82,7 @@ namespace Resturant.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> RegisterPost(Register user)
         {
             if (await _userManager.FindByNameAsync(user.UserName) != null)
@@ -134,7 +130,7 @@ namespace Resturant.Controllers
         }
 
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public IActionResult Management(ManagementViewModel model)
         {
             if(model == null)
@@ -197,7 +193,7 @@ namespace Resturant.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public async Task<string> CreateRole([FromBody] string newRole)
         {
             if (newRole == null || newRole == string.Empty)

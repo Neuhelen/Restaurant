@@ -7,7 +7,7 @@ using System;
 // Microsoft.Extensions.DependencyInjection.EntityFrameworkServiceCollectionExtensions.AddDbContext
 
 var builder = WebApplication.CreateBuilder(args);
-string? connectionString = builder.Configuration.GetConnectionString("LocalConnection");
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
