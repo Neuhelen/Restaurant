@@ -1,0 +1,88 @@
+﻿@model List<Booking>
+@{
+    ViewData["Title"] = "Booking List";
+}
+
+<style>
+/*    body {
+        font-family: Arial, sans-serif;
+    }*/
+
+    #bookingListTitle {
+        color: #333;
+        text-align: left;
+    }
+
+    #bookingTable {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    #bookingTable, th, .bookingRow td {
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .bookingRow:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .editButton {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+        .editButton:hover {
+            background-color: #45a049;
+        }
+
+</style>
+
+<h1 id="bookingListTitle">Booking List</h1>
+
+<table id="bookingTable">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Party Size</th>
+            <th>Description</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Booking booking in Model)
+        {
+            <tr class="bookingRow" data-id="@booking.Id">
+                <td>@booking.From.ToString()</td>
+                <td>@booking.Name</td>
+                <td>@booking.Email</td>
+                <td>@booking.Phone</td>
+                <td>@booking.PartySize</td>
+                <td>@booking.Description</td>
+                <td><button class="editButton" onclick="edit(@booking.Id)">Edit</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<script>function edit(id) {
+        window.location.href = '/Booking/Edit/' + id;
+    }</script>

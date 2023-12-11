@@ -1,6 +1,14 @@
-﻿/bin
-/obj
-/.vs
-/Migrations
+﻿bin
+obj
+.vs
+Migrations
 .vs/Resturant/xs/project-cache/Resturant-Debug.json
+<<<<<<< HEAD
 .vs/Resturant/xs/project-cache/Resturant-Debug.json
+=======
+*.xml
+.vs/Resturant/xs/UserPrefs.xml
+.vs/Resturant/xs/project-cache/Resturant-Debug.json
+.vs/Resturant/xs/UserPrefs.xml
+.vs/Resturant/xs/UserPrefs.xml
+>>>>>>> Gøkmen
