@@ -1,36 +1,35 @@
-﻿<Properties StartupConfiguration="{CACBA399-4344-4BDF-A848-6DD01B48C774}|Default" GitUserInfo="UsingGIT">
-  <MonoDevelop.Ide.ItemProperties.Resturant PreferredExecutionTarget="/Applications/Google Chrome.app" />
+﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{CACBA399-4344-4BDF-A848-6DD01B48C774}|Default">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Views/Booking/Edit.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/BookingController.cs">
     <Files>
-      <File FileName="Controllers/BookingController.cs" Line="27" Column="1" />
-      <File FileName="Views/Shared/_Layout.cshtml" />
-      <File FileName="Resturant.csproj" />
-      <File FileName="Views/Booking/Edit.cshtml" Line="80" Column="91" />
-      <File FileName="wwwroot/js/BookingForm.js" Line="199" Column="92" />
+      <File FileName="Models/Booking.cs" Line="33" Column="48" />
+      <File FileName="Controllers/BookingController.cs" Line="40" Column="10" />
+      <File FileName="wwwroot/js/EditBooking.js" />
+      <File FileName="Views/User/Index.cshtml" />
+      <File FileName="Views/Booking/Done.cshtml" />
+      <File FileName="Views/Booking/Edit.cshtml" Line="50" Column="1" />
+      <File FileName="Views/Booking/Form.cshtml" Line="1" Column="1" />
+      <File FileName="Views/Booking/List.cshtml" Line="78" Column="94" />
+      <File FileName="Views/Shared/_Layout.cshtml" Line="38" Column="34" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Resturant">
             <Node name="Resturant">
-              <Node name="Controllers" expanded="True" />
-              <Node name="Views">
-                <Node name="Booking">
-                  <Node name="Edit.cshtml" selected="True" />
-                </Node>
+              <Node name="Controllers">
+                <Node name="BookingController.cs" selected="True" />
               </Node>
-              <Node name="wwwroot" expanded="True">
-                <Node name="js" expanded="True" />
-              </Node>
+              <Node name="Models" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Resturant PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
