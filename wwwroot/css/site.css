@@ -1,23 +1,77 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    background-color: #2196F3; 
+    gap: 10px;
+    padding: 10px;
+}
+
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    color: black;
+    font-size: 30px;
+    text-align: center;
+}
+
+.booking-details {
+    border: 2px solid #000;
+    padding: 20px;
+    width: 400px;
+    margin: auto;
+}
+
+.details-label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.details-content {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.alt-grid-container {
+    background-color: #2196F3;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.alt-grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 20px;
 }
 
 .dark-mode {
-    background-color: black; 
+    background-color: #1e1e1e;
     color: #fff;
+}
+
+/* Dark mode style for both grid containers */
+.dark-mode .grid-container,
+.dark-mode .alt-grid-container {
+    background-color: #70100f; 
 }

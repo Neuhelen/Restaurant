@@ -4,20 +4,8 @@
 @{
 	ViewData["Title"] = "Booking Form";
 }
-<style>
-	.grid-container {
-		display: grid;
-		grid-template-columns: auto auto;
-		background-color: #2196F3;
-	}
 
-	.grid-item {
-		background-color: rgba(255, 255, 255, 0.8);
-		border: 1px solid rgba(0, 0, 0, 0.8);
-		font-size: 30px;
-		text-align: center;
-	}
-</style>
+<link rel="stylesheet" href="~/css/site.css">
 
 <!-- This part creates labels and textfields that updates when a key has been pressed. -->
 <div class="grid-container">
@@ -35,9 +23,10 @@
 	<div class="grid-item"><input type="text" id="notesTextbox" onkeyup="checkNotes()"></div>
 </div>
 
-<br><br>
+<br>
+<br>
 
 <!-- This part creates a button. -->
 <button id="continueButton">Continue</button>
 
-<script src="~/js/BookingForm.js" ></script>
+<script src="~/js/BookingForm.js"></script>

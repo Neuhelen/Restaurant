@@ -34,12 +34,19 @@ $(document).ready(function () {
     function disableDarkMode() {
         document.cookie = "DarkMode=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
-        //This part removes the dark mode styles: 
-        $('body').removeClass('dark-mode');
+        removeDarkModeStyles();
     }
-
+    
     //This function applies the dark mode styles
     function applyDarkModeStyles() {
-        $('body').toggleClass('dark-mode');
+        $('body').addClass('dark-mode');
+        $('.grid-container, .alt-grid-container').addClass('dark-mode-container');
+    }
+
+    function removeDarkModeStyles() {
+
+        //This part removes the dark mode styles: 
+        $('body').removeClass('dark-mode');
+        $('.grid-container, .alt-grid-container').removeClass('dark-mode-container');
     }
 });

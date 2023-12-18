@@ -2,23 +2,9 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Menu";
 }
-<style>
-    .grid-container {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-        background-color: #70100f;
-        padding: 10px;
-    }
-
-    .grid-item {
-        background-color: rgba(255, 255, 255, 0.8);
-        text-align: center;
-        padding: 20px 0;
-        font-size: 20px;
-    }
-</style>
+<link rel="stylesheet" href="~/css/site.css">
 
 <!-- This is a basic message, which is overwritten in the next part to make a dynamic message based on the time of the day -->
 <div class="menu-message">
@@ -66,18 +52,18 @@
     }
 </script>
 
-<div class="grid-container"></div>
+<div class="alt-grid-container"></div>
 
 <script>
     //This part gets the grid container. 
-    const gridContainer = document.querySelector('.grid-container');
+    const gridContainer = document.querySelector('.alt-grid-container');
 
     //This part creates and appends title elements. 
     const titles = ['Id', 'Meal', 'Ingredients', 'Price'];
 
     titles.forEach(title => {
         const titleElement = document.createElement('div');
-        titleElement.classList.add('grid-item');
+        titleElement.classList.add('alt-grid-item');
         titleElement.textContent = title;
         gridContainer.appendChild(titleElement);
     });
@@ -86,7 +72,7 @@
     menuItems.forEach(menuItem => {
         for (let key in menuItem) {
             const menuItemElement = document.createElement('div');
-            menuItemElement.classList.add('grid-item');
+            menuItemElement.classList.add('alt-grid-item');
             menuItemElement.textContent = menuItem[key];
             gridContainer.appendChild(menuItemElement);
         }
