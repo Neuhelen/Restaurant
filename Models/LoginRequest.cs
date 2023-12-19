@@ -4,7 +4,7 @@ namespace Resturant.Models
 {
     public class LoginRequest
     {
-        private string returnUrl;
+        private string rememberMe;
 
         [Required]
         public string UserName { get; set; }
@@ -12,6 +12,9 @@ namespace Resturant.Models
         [Required]
         public string Password { get; set; }
 
-        public string RememberMe { get; set; }
+        public string RememberMe { 
+            get { return rememberMe ?? "off"; } 
+            set => rememberMe = value; 
+        }
     }
 }
