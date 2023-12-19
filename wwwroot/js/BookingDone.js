@@ -1,19 +1,18 @@
+document.addEventListener("DOMContentLoaded", function () {
+    // Get the booking ID from the HTML element or wherever it's stored
+    const bookingId = parseInt(document.getElementById('bookingId').textContent);
 
-// Fetch data from local storage and display it
-document.addEventListener("DOMContentLoaded", function() {
-	const bookingDate = localStorage.getItem('bookingDate');
-	const name = localStorage.getItem('name');
-	const email = localStorage.getItem('email');
-	const phoneNumber = localStorage.getItem('phoneNumber');
-	const partySize = localStorage.getItem('partySize');
-	const additionalNotes = localStorage.getItem('additionalNotes')  || 'N/A';
-
-	// Populate the fields in the HTML
-    document.getElementById('bookingDate').textContent = bookingDate;
-    document.getElementById('name').textContent = name;
-    document.getElementById('email').textContent = email;
-    document.getElementById('phoneNumber').textContent = phoneNumber;
-    document.getElementById('partySize').textContent = partySize;
-    document.getElementById('additionalNotes').textContent = additionalNotes;
-
+    // Make an AJAX request to fetch booking data
+    fetch(`/Booking/GetBookingDetails/${bookingId}`)
+        .then(response => response.json())
+        .then(data => {
+            // Populate the fields in the HTML with the retrieved data
+            document.getElementById('bookingId').textContent = data.bookingId;
+            document.getElementById('bookingDate').textContent = data.bookingDate;
+            document.getElementById('name').textContent = data.name;
+            // Include other properties as needed
+        })
+        .catch(error => {
+            console.error('Error fetching booking data:', error);
+        });
 });

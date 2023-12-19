@@ -29,8 +29,10 @@ namespace Resturant.Controllers
         {
             _context.Bookings.Add(booking);
             _context.SaveChanges();
+
             return View("Done", booking);    
         }
+
 
         [Authorize]
         public IActionResult Edit(int id)

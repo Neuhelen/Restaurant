@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Booking Calendar";
+}
+<link rel="stylesheet" href="~/css/BookingCalendar.css" asp-append-version="true" />
+
+<div id="calendar">
+    <!-- Calendar Header -->
+    <div id="calendar-header">
+        <button id="prev-month">Prev</button>
+        <h2 id="month-name">Month Name</h2>
+        <button id="next-month">Next</button>
+    </div>
+
+    <!-- Days of the Week -->
+    <div id="weekdays">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+    </div>
+
+    <!-- Calendar Days -->
+    <div id="calendar-days"></div>
+</div>
+
+<script src="~/js/BookingCalendar.js"></script>

@@ -9,28 +9,32 @@
 
 <div id="bookingDetails" class="booking-details">
     <div>
+        <span class="details-label">ID:</span>
+        <span id="bookingId" class="details-content">@Model.Id</span>
+    </div>
+    <div>
         <span class="details-label">Date:</span>
-        <span id="bookingDate" class="details-content"></span>
+        <span id="bookingDate" class="details-content">@Model.From</span>
     </div>
     <div>
         <span class="details-label">Name:</span>
-        <span id="name" class="details-content"></span>
+        <span id="name" class="details-content">@Model.Name</span>
     </div>
     <div>
         <span class="details-label">Email:</span>
-        <span id="email" class="details-content"></span>
+        <span id="email" class="details-content">@Model.Email</span>
     </div>
     <div>
         <span class="details-label">Phone Number:</span>
-        <span id="phoneNumber" class="details-content"></span>
+        <span id="phoneNumber" class="details-content">@Model.Phone</span>
     </div>
     <div>
         <span class="details-label">Party Size:</span>
-        <span id="partySize" class="details-content"></span>
+        <span id="partySize" class="details-content">@Model.PartySize</span>
     </div>
     <div>
         <span class="details-label">Additional Notes:</span>
-        <span id="additionalNotes" class="details-content"></span>
+        <span id="additionalNotes" class="details-content">@Model.Description</span>
     </div>
 </div>
 
