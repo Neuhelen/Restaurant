@@ -5,5 +5,10 @@ Migrations
 .vs/**/*
 .vs/Resturant/xs/UserPrefs.xml
 .vs/Resturant/xs/project-cache/Resturant-Debug.json
+.idea
+.idea/**/*
+.vscode
+.vscode/**/*
+
 *.xml
 *.json
