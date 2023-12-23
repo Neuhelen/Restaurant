@@ -41,10 +41,17 @@ namespace Resturant.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Save(Booking newBooking)
+        public IActionResult Save(Booking newBooking, String EditBtn)
         {
-            EntityEntry<Booking> entityEntry = _context.Bookings.Entry(newBooking);
-            entityEntry.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            if(EditBtn == "submit")
+            {
+                EntityEntry<Booking> entityEntry = _context.Bookings.Entry(newBooking);
+                entityEntry.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            }
+            else if(EditBtn == "delete")
+            {
+                _context.Remove(newBooking);
+            }
             _context.SaveChanges();
             return RedirectToAction("List");
         }

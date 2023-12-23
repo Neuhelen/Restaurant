@@ -34,22 +34,12 @@
         <div class="grid-item"><label for="party">Enter any additional notes <br>(Food allergies or special needs):</label></div>
         <div class="grid-item"><input type="text" id="notesTextbox" name="Description" value="@Model.Description" onkeyup="checkNotes()"></div>
     </div>
-    <button id="submitButton" type="submit">Submit</button>
+    <button id="submitButton" type="submit" name="EditBtn" value="submit">Submit</button>
+    <button id="deleteButton" type="submit" name="EditBtn" value="delete">Delete</button>
 </form>
 
 <br>
 <br>
 
 
-@*<script src="~/js/EditBooking.js"></script>*@
-
-<script>
-    
-    // Local storage
-    function loadDataIntoForm() {
-
-    }
-    window.onload = loadDataIntoForm;
-
-
-</script>
+<script src="~/js/EditBooking.js"></script>
