@@ -54,7 +54,7 @@ namespace Resturant.Controllers
         [Authorize]
         public IActionResult List()
         {
-            List<Booking> listBookings = _context.Bookings.ToList();
+            List<Booking> listBookings = _context.Bookings.ToList() ?? new List<Booking>();
             return View(listBookings);
         }
     }
