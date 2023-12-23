@@ -29,10 +29,8 @@ namespace Resturant.Controllers
         {
             _context.Bookings.Add(booking);
             _context.SaveChanges();
-
             return View("Done", booking);    
         }
-
 
         [Authorize]
         public IActionResult Edit(int id)
@@ -54,7 +52,7 @@ namespace Resturant.Controllers
         [Authorize]
         public IActionResult List()
         {
-            List<Booking> listBookings = _context.Bookings.ToList() ?? new List<Booking>();
+            List<Booking> listBookings = _context.Bookings.ToList();
             return View(listBookings);
         }
     }
