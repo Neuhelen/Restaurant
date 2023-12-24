@@ -53,5 +53,45 @@ namespace Resturant.Controllers
                 Truefalse = truefalse;
             }
         }
+        public ActionResult ToggleDarkMode()
+        {
+            //This if-statement checks whether the dark mode cookie exists, and if it is set to true, 
+            //thus enabling dark mode. 
+            if (Request.Cookies["DarkMode"] == "true")
+            {
+                //This function disables dark mode, if it is enabled. 
+                DisableDarkMode();
+            }
+            else
+            {
+                //This function enables dark mode, if it is disabled. 
+                EnableDarkMode();
+            }
+
+            //The part redirects the user back to index. 
+            return RedirectToAction("Index");
+        }
+        private void EnableDarkMode()
+        {
+            //This part creates the DarkMode coókie, sets the expiration date to 30 days, 
+            //and specifies that the cookie is used for the whole website.
+            Response.Cookies.Append("DarkMode", "true", new CookieOptions
+            {
+                Expires = DateTimeOffset.Now.AddDays(30),
+                Domain = Request.Host.Host,
+                Path = "/"
+            });
+        }
+
+        private void DisableDarkMode()
+        {
+            //This part deletes the DarkMode cookie in order to disable the dark mode. 
+            Response.Cookies.Delete("DarkMode", new CookieOptions
+            {
+                Domain = Request.Host.Host,
+                Path = "/"
+            });
+        }
+
     }
 }

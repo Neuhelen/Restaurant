@@ -84,3 +84,74 @@ img {
 .team-pic {
     border-radius: 5%;
 }
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    background-color: #2196F3;
+    gap: 10px;
+    padding: 10px;
+}
+
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    color: black;
+    font-size: 30px;
+    text-align: center;
+}
+
+.alt-grid-container {
+    background-color: #2196F3;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 10px;
+}
+
+.alt-grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 20px;
+}
+
+.dark-mode {
+    background-color: #1e1e1e;
+    color: #fff;
+}
+
+    .dark-mode .grid-container,
+    .dark-mode .alt-grid-container {
+        background-color: #70100f;
+    }
+
+    .dark-mode .hero-left > h1,
+    .dark-mode .hero-left > h2,
+    .dark-mode .hero-left > p {
+        color: white;
+    }
+
+    .dark-mode h1,
+    .dark-mode h2,
+    .dark-mode p {
+        color: white;
+    }
+
+form .grid-container button {
+    background-color: rgba(255, 255, 255, 0.8);
+    color: black;
+}
+
+
+.dark-mode thead {
+    background-color: #1e1e1e;
+}
+
+.dark-mode .bookingRow:nth-child(even) {
+    background-color: #5f5f5f;
+}
+
+.dark-mode .editButton {
+    color: black;
+}
