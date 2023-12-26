@@ -30,21 +30,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function renderOrders() {
-        fetch(`/api/booking?month=${currentDate.getMonth() + 1}&year=${currentDate.getFullYear()}`)
+        fetch(`/Booking/GetBookingCounts?year=${currentDate.getFullYear()}&month=${currentDate.getMonth() + 1}`)
             .then(response => response.json())
-            .then(bookings => {
+            .then(bookingCounts => {
                 const days = document.querySelectorAll('#calendar-days .day');
                 days.forEach(day => {
                     const dayNumber = parseInt(day.textContent);
-                    const dayBookings = bookings.filter(booking => {
-                        // Parsing the booking date in ISO 8601 format
-                        const bookingDate = new Date(booking.bookingDate);
-                        return bookingDate.getDate() === dayNumber &&
-                            bookingDate.getMonth() === currentDate.getMonth() &&
-                            bookingDate.getFullYear() === currentDate.getFullYear();
-                    });
-                    if (dayBookings.length > 0) {
-                        day.textContent += ` (${dayBookings.length})`;
+                    const bookingCount = bookingCounts.find(count => new Date(count.date).getDate() === dayNumber);
+                    if (bookingCount && bookingCount.count > 0) {
+                        const ordersText = document.createElement('span');
+                        ordersText.textContent = `Orders: ${bookingCount.count}`;
+                        ordersText.classList.add('orders-count');
+                        day.appendChild(ordersText);
                         day.classList.add('has-bookings');
                     }
                 });

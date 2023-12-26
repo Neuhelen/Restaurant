@@ -3,6 +3,11 @@
     padding: 10px;
 }
 
+.date {
+    display: block;
+    margin-bottom: 4px;
+}
+
 #calendar-header {
     display: flex;
     justify-content: space-between;
@@ -26,4 +31,16 @@
     height: 100px;
     border: 1px solid #eee;
     text-align: center;
+}
+
+.has-bookings .orders-count {
+    background-color: #ffc107;
+    border-radius: 4px;
+    padding: 2px 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.orders-count {
+    display: block;
+    font-weight: bold;
 }
