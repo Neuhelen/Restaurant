@@ -2,17 +2,20 @@ document.addEventListener("DOMContentLoaded", function () {
     // Get the booking ID from the HTML element or wherever it's stored
     const bookingId = parseInt(document.getElementById('bookingId').textContent);
 
-    // Make an AJAX request to fetch booking data
-    fetch(`/Booking/GetBookingDetails/${bookingId}`)
+    // Get the booking details from the API
+fetch(`/api/booking/${bookingId}`)
         .then(response => response.json())
-        .then(data => {
-            // Populate the fields in the HTML with the retrieved data
-            document.getElementById('bookingId').textContent = data.bookingId;
-            document.getElementById('bookingDate').textContent = data.bookingDate;
-            document.getElementById('name').textContent = data.name;
-            // Include other properties as needed
+        .then(booking => {
+            // Update the HTML elements with the booking details
+            document.getElementById('bookingId').textContent = booking.id;
+            document.getElementById('bookingDate').textContent = booking.bookingDate;
+            document.getElementById('bookingTime').textContent = booking.bookingTime;
+            document.getElementById('bookingDuration').textContent = booking.bookingDuration;
+            document.getElementById('bookingPrice').textContent = booking.bookingPrice;
+            document.getElementById('bookingStatus').textContent = booking.bookingStatus;
+            document.getElementById('bookingNotes').textContent = booking.bookingNotes;
+            document.getElementById('bookingCustomer').textContent = booking.customerName;
+            document.getElementById('bookingEmployee').textContent = booking.employeeName;
+            document.getElementById('bookingService').textContent = booking.serviceName;
         })
-        .catch(error => {
-            console.error('Error fetching booking data:', error);
-        });
-});
+        .catch(error => console.error(error));

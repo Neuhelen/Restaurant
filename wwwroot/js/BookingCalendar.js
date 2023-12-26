@@ -18,13 +18,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Add empty days for previous month
         for (let i = 0; i < firstDay.getDay(); i++) {
-            calendarDays.innerHTML += '<div></div>';
+            calendarDays.innerHTML += '<div class="empty-day"></div>';
         }
 
         // Add days of the current month
         for (let i = 1; i <= lastDay.getDate(); i++) {
-            calendarDays.innerHTML += `<div>${i}</div>`;
+            calendarDays.innerHTML += `<div class="day">${i}</div>`;
         }
+
+        renderOrders(); // Call to update bookings on the calendar
+    }
+
+    function renderOrders() {
+        fetch(`/Booking/GetBookingCounts?year=${currentDate.getFullYear()}&month=${currentDate.getMonth() + 1}`)
+            .then(response => response.json())
+            .then(bookingCounts => {
+                const days = document.querySelectorAll('#calendar-days .day');
+                days.forEach(day => {
+                    const dayNumber = parseInt(day.textContent);
+                    const bookingCount = bookingCounts.find(count => new Date(count.date).getDate() === dayNumber);
+                    if (bookingCount && bookingCount.count > 0) {
+                        const ordersText = document.createElement('span');
+                        ordersText.textContent = `Orders: ${bookingCount.count}`;
+                        ordersText.classList.add('orders-count');
+                        day.appendChild(ordersText);
+                        day.classList.add('has-bookings');
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching bookings:', error));
     }
 
     prevButton.addEventListener('click', function () {
@@ -37,5 +59,5 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCalendar();
     });
 
-    renderCalendar();
+    renderCalendar(); // Initial render
 });

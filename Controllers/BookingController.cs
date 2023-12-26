@@ -24,6 +24,11 @@ namespace Resturant.Controllers
             return View();
         }
 
+        public IActionResult BookingCalendar()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Done(Booking booking)
         {
@@ -61,6 +66,24 @@ namespace Resturant.Controllers
         {
             List<Booking> listBookings = _context.Bookings.ToList();
             return View(listBookings);
+        }
+
+        public JsonResult GetBookings()
+        {
+            var bookings = _context.Bookings.ToList();
+            return Json(bookings);
+        }
+
+        [HttpGet]
+        public JsonResult GetBookingCounts(int year, int month)
+        {
+            var bookingCounts = _context.Bookings
+                .Where(b => b.From.Year == year && b.From.Month == month)
+                .GroupBy(b => b.From.Date)
+                .Select(group => new { Date = group.Key, Count = group.Count() })
+                .ToList();
+
+            return Json(bookingCounts);
         }
     }
 }
