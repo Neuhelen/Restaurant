@@ -37,5 +37,23 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCalendar();
     });
 
+    // Add the amount of orders each day to the calendar
+    function renderOrders() {
+        fetch(`/api/booking?month=${currentDate.getMonth() + 1}&year=${currentDate.getFullYear()}`)
+            .then(response => response.json())
+            .then(bookings => {
+                const days = document.querySelectorAll('#calendar-days div');
+                days.forEach(day => {
+                    const dayNumber = parseInt(day.textContent);
+                    const dayBookings = bookings.filter(booking => {
+                        const bookingDate = new Date(booking.bookingDate);
+                        return bookingDate.getDate() === dayNumber;
+                    });
+                    day.textContent = `${dayNumber} (${dayBookings.length})`;
+                });
+            })
+            .catch(error => console.error(error));
+    }
+
     renderCalendar();
 });

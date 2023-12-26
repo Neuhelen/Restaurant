@@ -82,7 +82,47 @@
 </table>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script>function edit(id) {
+<script>
+    $(document).ready(function () {
+        function updateBookingList() {
+            $.ajax({
+                url: '/Booking/GetBookings', // Adjust the URL as needed
+                type: 'GET',
+                success: function (bookings) {
+                    populateTable(bookings);
+                },
+                error: function (error) {
+                    console.error('Error updating bookings:', error);
+                }
+            });
+        }
+
+        function populateTable(bookings) {
+            var tableBody = $('#bookingTable tbody');
+            tableBody.empty(); // Clear current content
+
+            bookings.forEach(function (booking) {
+                var row = '<tr>' +
+                    '<td>' + booking.from + '</td>' +
+                    '<td>' + booking.name + '</td>' +
+                    '<td>' + booking.email + '</td>' +
+                    '<td>' + booking.phone + '</td>' +
+                    '<td>' + booking.partySize + '</td>' +
+                    '<td>' + booking.description + '</td>' +
+                    '<td><button onclick="edit(' + booking.id + ')">Edit</button></td>' +
+                    '</tr>';
+                tableBody.append(row);
+            });
+        }
+
+        // Update the booking list periodically
+        setInterval(updateBookingList, 10000); // Every 10 seconds
+        updateBookingList(); // Initial update
+    });
+
+    function edit(id) {
         window.location.href = '/Booking/Edit/' + id;
-    }</script>
+    }
+</script>
