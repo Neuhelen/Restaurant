@@ -23,7 +23,7 @@
 <form method="post" action="/Booking/Done">
     <div class="grid-container">
         <div class="grid-item"><label for="bookingDate">Enter the date you wish to book:</label></div>
-        <div class="grid-item"><input type="date" id="bookingDate" name="From" onchange="checkDate()"></div>
+        <div class="grid-item"><input type="datetime-local" id="bookingDate" name="From" onchange="checkDate()"></div>
         <div class="grid-item"><label for="party">Enter your name:</label></div>
         <div class="grid-item"><input type="text" id="nameTextbox" name="Name" onkeyup="checkName()"></div>
         <div class="grid-item"><label for="party">Enter your email:</label></div>
