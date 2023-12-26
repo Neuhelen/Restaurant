@@ -18,13 +18,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Add empty days for previous month
         for (let i = 0; i < firstDay.getDay(); i++) {
-            calendarDays.innerHTML += '<div></div>';
+            calendarDays.innerHTML += '<div class="empty-day"></div>';
         }
 
         // Add days of the current month
         for (let i = 1; i <= lastDay.getDate(); i++) {
-            calendarDays.innerHTML += `<div>${i}</div>`;
+            calendarDays.innerHTML += `<div class="day">${i}</div>`;
         }
+
+        renderOrders(); // Call to update bookings on the calendar
+    }
+
+    function renderOrders() {
+        fetch(`/api/booking?month=${currentDate.getMonth() + 1}&year=${currentDate.getFullYear()}`)
+            .then(response => response.json())
+            .then(bookings => {
+                const days = document.querySelectorAll('#calendar-days .day');
+                days.forEach(day => {
+                    const dayNumber = parseInt(day.textContent);
+                    const dayBookings = bookings.filter(booking => {
+                        // Parsing the booking date in ISO 8601 format
+                        const bookingDate = new Date(booking.bookingDate);
+                        return bookingDate.getDate() === dayNumber &&
+                            bookingDate.getMonth() === currentDate.getMonth() &&
+                            bookingDate.getFullYear() === currentDate.getFullYear();
+                    });
+                    if (dayBookings.length > 0) {
+                        day.textContent += ` (${dayBookings.length})`;
+                        day.classList.add('has-bookings');
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching bookings:', error));
     }
 
     prevButton.addEventListener('click', function () {
@@ -37,23 +62,5 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCalendar();
     });
 
-    // Add the amount of orders each day to the calendar
-    function renderOrders() {
-        fetch(`/api/booking?month=${currentDate.getMonth() + 1}&year=${currentDate.getFullYear()}`)
-            .then(response => response.json())
-            .then(bookings => {
-                const days = document.querySelectorAll('#calendar-days div');
-                days.forEach(day => {
-                    const dayNumber = parseInt(day.textContent);
-                    const dayBookings = bookings.filter(booking => {
-                        const bookingDate = new Date(booking.bookingDate);
-                        return bookingDate.getDate() === dayNumber;
-                    });
-                    day.textContent = `${dayNumber} (${dayBookings.length})`;
-                });
-            })
-            .catch(error => console.error(error));
-    }
-
-    renderCalendar();
+    renderCalendar(); // Initial render
 });
