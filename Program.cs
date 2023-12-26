@@ -1,11 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Resturant.Controllers;
 using Resturant.Models;
-using System;
-using System.Runtime.InteropServices;
-using Microsoft.AspNetCore.Hosting;
 
 internal class Program
 {
@@ -57,7 +52,7 @@ internal class Program
         {
             // Cookie settings
             options.Cookie.HttpOnly = true;
-            options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
 
             options.LoginPath = "/User/Login";
             options.AccessDeniedPath = "/User/AccessDenied";

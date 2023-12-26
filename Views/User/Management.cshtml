@@ -81,43 +81,47 @@
 <a href="/User/Register">Register new user</a>
 <div>
      <span>
-         Only the user it self can change its password. <br />
+        Only the user it self can change its password. <br />
         To change the password of a user, loggin the user and click the username in the upperright corner. <br />
-         This will take you to the user profile page, where there is an option to change the password.
+        This will take you to the user profile page, where there is an option to change the password.
      </span>
 </div>
 
-<br />
-<br />
+@*Check if the program is running in debug mode and if so, let the developer add and delete roles*@
+@if (System.Diagnostics.Debugger.IsAttached)
+{
+    <br />
+    <br />
 
-<h2>Roles</h2>
-<table id="roleTable">
-    <thead>
-        <tr>
-            <th>Role</th>
-            <th class="col-3">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (IdentityRole role in Model.AllRoles)
-        {
-            <tr data-role="@role.Name">
-                <td>@role.Name</td>
-                <td>
-                    <button class="removeRoleBtn" onclick="removeRole('@role.Name')">Delete</button>
-                </td>
+    <h2>Roles</h2>
+    <table id="roleTable">
+        <thead>
+            <tr>
+                <th>Role</th>
+                <th class="col-3">Action</th>
             </tr>
-        }
-        <tr id="newRoleRow">
-            <td>
-				<input id="newRole" type="text" placeholder="New role" />
-            </td>
-            <td>
-                <button class="createRoleBtn" onclick="createRole()">Create</button>
-			</td>
-        </tr>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (IdentityRole role in Model.AllRoles)
+            {
+                <tr data-role="@role.Name">
+                    <td>@role.Name</td>
+                    <td>
+                        <button class="removeRoleBtn" onclick="removeRole('@role.Name')">Delete</button>
+                    </td>
+                </tr>
+            }
+            <tr id="newRoleRow">
+                <td>
+				    <input id="newRole" type="text" placeholder="New role" />
+                </td>
+                <td>
+                    <button class="createRoleBtn" onclick="createRole()">Create</button>
+			    </td>
+            </tr>
+        </tbody>
+    </table>
+}
 
 <script>
     let allRoles = [
