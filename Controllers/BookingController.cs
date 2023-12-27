@@ -54,17 +54,18 @@ namespace Resturant.Controllers
             {
                 EntityEntry<Booking> entityEntry = _context.Bookings.Entry(newBooking);
                 entityEntry.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+
+                if (Request.Form["repeatEditInput"] == "true")
+                {
+                    _context.SaveChanges();
+                    return RedirectToAction("Edit", new { id = newBooking.Id });
+                }
             }
             else if (EditBtn == "delete")
             {
                 _context.Remove(newBooking);
             }
             _context.SaveChanges();
-
-            if (Request.Form["repeatEditInput"] == "true")
-            {
-                return RedirectToAction("Edit", new { id = newBooking.Id });
-            }
 
             return RedirectToAction("List");
         }
