@@ -14,6 +14,8 @@ namespace Resturant.Controllers
 
         private readonly ResturantContext _context;
 
+        private Booking updated_booking;
+
         public IActionResult Index()
         {
             return View();
@@ -48,16 +50,22 @@ namespace Resturant.Controllers
         [HttpPost]
         public IActionResult Save(Booking newBooking, String EditBtn)
         {
-            if(EditBtn == "submit")
+            if (EditBtn == "submit")
             {
                 EntityEntry<Booking> entityEntry = _context.Bookings.Entry(newBooking);
                 entityEntry.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             }
-            else if(EditBtn == "delete")
+            else if (EditBtn == "delete")
             {
                 _context.Remove(newBooking);
             }
             _context.SaveChanges();
+
+            if (Request.Form["repeatEditInput"] == "true")
+            {
+                return RedirectToAction("Edit", new { id = newBooking.Id });
+            }
+
             return RedirectToAction("List");
         }
 
@@ -85,5 +93,20 @@ namespace Resturant.Controllers
 
             return Json(bookingCounts);
         }
+
+        [HttpGet]
+        public JsonResult UpdateEdit(int Id)
+        {
+            updated_booking = _context.Bookings?.Find(Id);
+            if (updated_booking != null)
+            {
+                return new JsonResult(Ok(updated_booking));
+            }
+            else
+            {
+                return new JsonResult(new { error = "Booking not found" }) { StatusCode = 404 };
+            }
+        }
+
     }
 }

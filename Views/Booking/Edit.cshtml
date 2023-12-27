@@ -19,27 +19,68 @@
 
 <!-- This part creates labels and textfields that updates when a key has been pressed. -->
 <form method="post" action="/Booking/Save">
-    <input type="text" value="@Model.Id" name="Id" hidden/>
+    <input type="text" value="@Model.Id" name="Id" hidden />
     <div class="grid-container">
-        <div class="grid-item"><label for="From">Enter the date you wish to book:</label></div>
+        <div class="grid-item" id="bookingDateLabel"><label for="From">Enter the date you wish to book:</label></div>
         <div class="grid-item"><input type="datetime-local" id="bookingDate" name="From" value="@Model.From" onchange="checkDate()"></div>
-        <div class="grid-item"><label for="party">Enter your name:</label></div>
+        <div class="grid-item" id="nameLabel"><label for="Name">Enter your name:</label></div>
         <div class="grid-item"><input type="text" id="nameTextbox" name="Name" value="@Model.Name" onkeyup="checkName()"></div>
-        <div class="grid-item"><label for="party">Enter your email:</label></div>
+        <div class="grid-item" id="emailLabel"><label for="Email">Enter your email:</label></div>
         <div class="grid-item"><input type="text" id="emailTextbox" name="Email" value="@Model.Email" onkeyup="checkEmail()"></div>
-        <div class="grid-item"><label for="party">Enter your phone number:</label></div>
+        <div class="grid-item" id="phoneLabel"><label for="Phone">Enter your phone number:</label></div>
         <div class="grid-item"><input type="number" id="phoneTextbox" name="Phone" value="@Model.Phone" onkeyup="checkPhoneNumber()"></div>
-        <div class="grid-item"><label for="party">Enter the size of your party:</label></div>
+        <div class="grid-item" id="partyLabel"><label for="PartySize">Enter the size of your party:</label></div>
         <div class="grid-item"><input type="number" id="partyTextbox" name="PartySize" value="@Model.PartySize" onkeyup="checkParty()"></div>
-        <div class="grid-item"><label for="party">Enter any additional notes <br>(Food allergies or special needs):</label></div>
+        <div class="grid-item" id="notesLabel"><label for="Description">Enter any additional notes <br>(Food allergies or special needs):</label></div>
         <div class="grid-item"><input type="text" id="notesTextbox" name="Description" value="@Model.Description" onkeyup="checkNotes()"></div>
+        <div class="grid-item"><input type="hidden" id="repeatEditInput" name="repeatEditInput" value="false"></div>
+        </div>
+
     </div>
+
+    <button id="repeatEditButton" type="button" onclick="toggleRepeatEdit()">Set Repeat Edit</button>
+
     <button id="submitButton" type="submit" name="EditBtn" value="submit">Submit</button>
     <button id="deleteButton" type="submit" name="EditBtn" value="delete">Delete</button>
 </form>
 
-<br>
-<br>
-
-
 <script src="~/js/EditBooking.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function edit_update() {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("UpdateEdit", new { Id = Model.Id })",
+            dataType: "json",
+            success: function (response) {
+                $("#bookingDateLabel").html("The current date is: " + response.value.from + ".<br>Enter the date you wish to book:");
+                $("#nameLabel").html("The current name is: " + response.value.name + ".<br>Enter the name you wish to book under:");
+                $("#emailLabel").html("The current email is: " + response.value.email + ".<br>Enter the email you wish to book under:");
+                $("#phoneLabel").html("The current phone number is: " + response.value.phone + ".<br>Enter the phone number you wish to book under:");
+                $("#partyLabel").html("The current size of the party is: " + response.value.partySize + ".<br>Enter the size of the party:");
+                $("#notesLabel").html("The current notes are: " + response.value.description + ".<br>Enter any additional notes for the booking:");
+
+                setTimeout(edit_update, 5000);
+            },
+            failure: function (jqXHR, textStatus, errorThrown) {
+                alert("HTTP Status: " + jqXHR.status + "; Error Text: " + jqXHR.responseText);
+            }
+        });
+    });
+
+    function toggleRepeatEdit() {
+        var repeatEditInput = document.getElementById("repeatEditInput");
+        var repeatEditButton = document.getElementById("repeatEditButton");
+
+        // Toggle the value of the hidden input field
+        repeatEditInput.value = (repeatEditInput.value === "true") ? "false" : "true";
+
+        // Update the button text based on the value
+        if (repeatEditInput.value === "true") {
+            repeatEditButton.innerHTML = "Repeat Edit has been set";
+        } else {
+            repeatEditButton.innerHTML = "Set Repeat Edit";
+        }
+    }
+</script>
